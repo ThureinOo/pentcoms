@@ -1,0 +1,11 @@
+- id: Linux
+  label: Linux
+  description: Target is running a Linux-based operating system.
+
+- id: Windows
+  label: Windows
+  description: Target is running a Windows operating system.
+
+- id: macOS
+  label: macOS
+  description: Target is running macOS.

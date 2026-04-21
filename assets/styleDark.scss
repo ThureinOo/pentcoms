@@ -1,0 +1,280 @@
+---
+---
+
+$accent: #e74c3c;
+$hover: #ff6b6b;
+$dark: #1a1a2e;
+$darker: #16213e;
+$darkest: #0f3460;
+$text: #c9c9c9;
+$border: #333;
+$code-bg: #16213e;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: $text;
+    background: $dark;
+    line-height: 1.6;
+}
+
+h1#page-title {
+    color: $accent;
+    font-size: 2em;
+    margin: 0;
+}
+
+#title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid $accent;
+}
+
+#title-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+a {
+    color: $hover;
+    text-decoration: none;
+    &:hover {
+        color: #ff8787;
+        text-decoration: underline;
+    }
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 120px;
+}
+
+#bin-search-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: $darker;
+    border-radius: 8px;
+    border: 1px solid $border;
+}
+
+.filter-group {
+    h3 {
+        margin: 0 0 8px 0;
+        font-size: 0.9em;
+        color: $accent;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    label {
+        font-size: 0.85em;
+        cursor: pointer;
+        color: $text;
+        &:hover {
+            color: $hover;
+        }
+    }
+    input[type="checkbox"] {
+        margin-right: 4px;
+        accent-color: $accent;
+    }
+}
+
+#bin-search {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1em;
+    border: 2px solid $border;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    outline: none;
+    background: $darker;
+    color: $text;
+    transition: border-color 0.2s;
+    &:focus {
+        border-color: $accent;
+    }
+}
+
+#bin-table-wrapper {
+    overflow-x: auto;
+}
+
+#bin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bin-row {
+    border-bottom: 1px solid $border;
+    &:hover {
+        background: $darker;
+    }
+    td {
+        padding: 12px 8px;
+    }
+}
+
+.bin-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: $hover;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    li a {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 0.75em;
+        text-decoration: none;
+        color: #fff;
+    }
+    .tag-phase { background: #2980b9; }
+    .tag-os { background: #27ae60; }
+    .tag-service { background: #8e44ad; }
+    .tag-port { background: #d35400; }
+    .tag-item { background: #16a085; }
+    .tag-technique { background: #c0392b; }
+    .tag-position { background: #2c3e50; }
+}
+
+.examples {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+    li {
+        margin: 0;
+    }
+    pre {
+        background: $code-bg;
+        border: 1px solid $border;
+        border-radius: 4px;
+        padding: 10px 14px;
+        overflow-x: auto;
+        margin: 0;
+    }
+    code {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-size: 0.85em;
+        color: #e0e0e0;
+    }
+}
+
+.copy-img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.5;
+    cursor: pointer;
+    filter: invert(1);
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #555;
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+}
+
+input:checked + .slider {
+    background-color: $accent;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 26px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.permalink {
+    display: inline-block;
+    margin-left: 8px;
+    opacity: 0;
+    &:after {
+        content: "#";
+        color: $accent;
+    }
+}
+h2:hover .permalink,
+h3:hover .permalink {
+    opacity: 1;
+}
+
+// GitHub corner SVG for dark mode
+.github-corner svg {
+    fill: $text !important;
+}
+
+@media (max-width: 768px) {
+    #bin-search-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    #title-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #bin-search-wrapper {
+        grid-template-columns: 1fr;
+    }
+}

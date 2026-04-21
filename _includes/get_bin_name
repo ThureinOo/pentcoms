@@ -1,0 +1,1 @@
+{% assign parts = include.path | split: '/' %}{% assign filename = parts | last %}{{ filename | replace: '.md', '' }}

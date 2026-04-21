@@ -1,0 +1,43 @@
+- id: No_Creds
+  label: No Creds
+  description: No credentials available — unauthenticated attacks only.
+
+- id: Username
+  label: Username
+  description: A valid username is known.
+
+- id: Password
+  label: Password
+  description: A valid password is known.
+
+- id: Hash
+  label: Hash
+  description: An NTLM or other password hash is available.
+
+- id: TGT
+  label: TGT
+  description: A Kerberos Ticket Granting Ticket is available.
+
+- id: TGS
+  label: TGS
+  description: A Kerberos Ticket Granting Service ticket is available.
+
+- id: Certificate
+  label: Certificate
+  description: A PFX/certificate is available.
+
+- id: Shell
+  label: Shell
+  description: A shell (reverse/bind) on the target is available.
+
+- id: Key
+  label: SSH Key
+  description: An SSH private key is available.
+
+- id: Token
+  label: Token
+  description: An access token or session token is available.
+
+- id: SPN
+  label: SPN
+  description: A Service Principal Name is known.

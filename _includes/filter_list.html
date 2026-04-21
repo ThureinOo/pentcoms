@@ -1,0 +1,50 @@
+<ul class="filter-list">
+    {% for pair in site.data.phases %}
+    {% assign fid = pair.id %}
+    {% if include.bin.phase contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-phase">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.target_os %}
+    {% assign fid = pair.id %}
+    {% if include.bin.target_os contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-os">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.services %}
+    {% assign fid = pair.id %}
+    {% if include.bin.services contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-service">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.ports %}
+    {% assign fid = pair.id %}
+    {% if include.bin.ports contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-port">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.items %}
+    {% assign fid = pair.id %}
+    {% if include.bin.items contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-item">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.techniques %}
+    {% assign fid = pair.id %}
+    {% if include.bin.techniques contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-technique">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% for pair in site.data.network_positions %}
+    {% assign fid = pair.id %}
+    {% if include.bin.network_position contains fid %}
+    <li><a href="{{ include.bin.url }}#{{ fid }}" class="tag-position">{{ pair.label }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

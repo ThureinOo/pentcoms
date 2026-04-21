@@ -1,0 +1,284 @@
+<div id="bin-search-wrapper">
+
+    <!-- PHASE -->
+    <div class="filter-group">
+        <h3>Phase:</h3>
+        {% for pair in site.data.phases %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="phase">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- TARGET OS -->
+    <div class="filter-group">
+        <h3>Target OS:</h3>
+        {% for pair in site.data.target_os %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="target_os">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- SERVICES -->
+    <div class="filter-group">
+        <h3>Services:</h3>
+        {% for pair in site.data.services %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="services">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- OPEN PORTS -->
+    <div class="filter-group">
+        <h3>Open Ports:</h3>
+        {% for pair in site.data.ports %}
+        <input type="checkbox" id="cb-port-{{ pair.id }}" onclick='handleChange(this, "port-{{ pair.id }}")' data-filter="ports">
+        <label for="cb-port-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- WHAT YOU HAVE -->
+    <div class="filter-group">
+        <h3>What you have:</h3>
+        {% for pair in site.data.items %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="items">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- TECHNIQUE -->
+    <div class="filter-group">
+        <h3>Technique:</h3>
+        {% for pair in site.data.techniques %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="techniques">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+    <!-- NETWORK POSITION -->
+    <div class="filter-group">
+        <h3>Network Position:</h3>
+        {% for pair in site.data.network_positions %}
+        <input type="checkbox" id="cb-{{ pair.id }}" onclick='handleChange(this, "{{ pair.id }}")' data-filter="network_position">
+        <label for="cb-{{ pair.id }}">{{ pair.label }}</label>
+        <br>
+        {% endfor %}
+    </div>
+
+</div>
+
+<input id="bin-search" type="text" placeholder="Search among {{ site.pentcoms | size }} commands: <command> +<filter> ..."/>
+
+<div id="bin-table-wrapper">
+<table id="bin-table">
+    {% assign pentcoms_sorted = site.pentcoms | reverse %}
+    {% for file in pentcoms_sorted %}
+    <tr class="bin-row"
+        data-phase="{% for p in file.phase %}{{ p }},{% endfor %}"
+        data-target_os="{% for o in file.target_os %}{{ o }},{% endfor %}"
+        data-services="{% for s in file.services %}{{ s }},{% endfor %}"
+        data-ports="{% for p in file.ports %}{{ p }},{% endfor %}"
+        data-items="{% for i in file.items %}{{ i }},{% endfor %}"
+        data-techniques="{% for t in file.techniques %}{{ t }},{% endfor %}"
+        data-network_position="{% for n in file.network_position %}{{ n }},{% endfor %}"
+    >
+        <td>
+            <a href="{{ site.baseurl }}{{ file.url }}" class="bin-name">
+                {% capture bin_name %}{% include get_bin_name path=file.path %}{% endcapture %}
+                {{ bin_name }}
+            </a>
+            <a href="javascript:void(0)" onClick="copyFunction(this)" style="float: right;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
+            {% include filter_list.html bin=file %}
+            <span class="bin-command" style="display:none;">{{ file.command | escape }}</span>
+            <ul class="examples">
+                <li>
+                    <pre><code>{{ file.command | escape }}</code></pre>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<p id="no-results" style="display:none; text-align:center; padding: 20px; font-style: italic;">No commands match the selected filters.</p>
+
+<script>
+// All filter category definitions
+var filterCategories = {
+    phase:            [{% for p in site.data.phases %}"{{ p.id }}",{% endfor %}],
+    target_os:        [{% for o in site.data.target_os %}"{{ o.id }}",{% endfor %}],
+    services:         [{% for s in site.data.services %}"{{ s.id }}",{% endfor %}],
+    ports:            [{% for p in site.data.ports %}"port-{{ p.id }}",{% endfor %}],
+    items:            [{% for i in site.data.items %}"{{ i.id }}",{% endfor %}],
+    techniques:       [{% for t in site.data.techniques %}"{{ t.id }}",{% endfor %}],
+    network_position: [{% for n in site.data.network_positions %}"{{ n.id }}",{% endfor %}]
+};
+
+// Map filter IDs to their category for quick lookup
+var filterToCategory = {};
+Object.keys(filterCategories).forEach(function(cat) {
+    filterCategories[cat].forEach(function(fid) {
+        filterToCategory[fid] = cat;
+    });
+});
+
+function copyFunction(el) {
+    var row = el.closest('tr');
+    var commandText = row.querySelector('.bin-command').textContent;
+    navigator.clipboard.writeText(commandText.trim()).then(function() {
+        var img = el.querySelector('img');
+        img.alt = "Copied";
+        img.title = "Copied";
+        setTimeout(function() { img.alt = "Copy"; img.title = "Copy"; }, 2000);
+    });
+}
+
+function getActiveFilters() {
+    var active = {};
+    var checkboxes = document.querySelectorAll('#bin-search-wrapper input[type="checkbox"]:checked');
+    checkboxes.forEach(function(cb) {
+        var cat = cb.getAttribute('data-filter');
+        if (!active[cat]) active[cat] = [];
+        // For ports, extract the port number from the filter id
+        var filterId = cb.id.replace('cb-', '');
+        if (cat === 'ports') {
+            // cb id is cb-port-XXX, the actual port value is just the number
+            active[cat].push(filterId.replace('port-', ''));
+        } else {
+            active[cat].push(filterId);
+        }
+    });
+    return active;
+}
+
+function filter() {
+    var searchInput = document.getElementById('bin-search');
+    var query = searchInput.value.toLowerCase().trim();
+
+    // Parse search: first token is text search, +tokens are filter toggles
+    var parts = query.split('+').map(function(s) { return s.trim(); });
+    var textSearch = parts[0] || '';
+    var searchFilters = parts.slice(1).filter(function(s) { return s.length > 0; });
+
+    // Activate filters from search bar
+    searchFilters.forEach(function(sf) {
+        sf = sf.replace(/\s+/g, '_');
+        var cb = document.getElementById('cb-' + sf) || document.getElementById('cb-port-' + sf);
+        if (cb && !cb.checked) {
+            cb.checked = true;
+        }
+    });
+
+    var activeFilters = getActiveFilters();
+    var rows = document.querySelectorAll('.bin-row');
+    var visibleCount = 0;
+
+    rows.forEach(function(row) {
+        var show = true;
+
+        // Text search on command name
+        if (textSearch) {
+            var name = row.querySelector('.bin-name').textContent.toLowerCase().trim();
+            var command = row.querySelector('.bin-command').textContent.toLowerCase();
+            if (name.indexOf(textSearch) === -1 && command.indexOf(textSearch) === -1) {
+                show = false;
+            }
+        }
+
+        // Filter matching: for each active category, the row must have at least one matching value
+        if (show) {
+            Object.keys(activeFilters).forEach(function(cat) {
+                if (!show) return;
+                var required = activeFilters[cat];
+                var rowData = (row.getAttribute('data-' + cat) || '').split(',').filter(function(s) { return s.length > 0; });
+                var hasMatch = required.some(function(r) {
+                    return rowData.indexOf(r) !== -1;
+                });
+                if (!hasMatch) show = false;
+            });
+        }
+
+        row.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+    });
+
+    // Show/hide no results message
+    var noResults = document.getElementById('no-results');
+    if (noResults) {
+        noResults.style.display = (visibleCount === 0 && (textSearch || Object.keys(activeFilters).length > 0)) ? '' : 'none';
+    }
+}
+
+function handleChange(checkbox, label) {
+    // Update URL hash
+    var hash = window.location.hash.replace('#', '');
+    if (checkbox.checked) {
+        hash = hash ? hash + '+' + label : '+' + label;
+    } else {
+        hash = hash.replace('+' + label, '').replace(label, '');
+    }
+    window.location.hash = hash;
+    filter();
+}
+
+function restoreFromHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    var parts = hash.split('+').filter(function(s) { return s.length > 0; });
+    parts.forEach(function(part) {
+        var cb = document.getElementById('cb-' + part) || document.getElementById('cb-port-' + part.replace('port-', ''));
+        if (cb) cb.checked = true;
+    });
+    // Put text search in input if first part isn't a filter
+    if (parts.length > 0 && !document.getElementById('cb-' + parts[0]) && !document.getElementById('cb-port-' + parts[0].replace('port-', ''))) {
+        document.getElementById('bin-search').value = parts[0];
+    }
+    filter();
+}
+
+function setup() {
+    var searchInput = document.getElementById('bin-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', filter);
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT') {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                // Uncheck all
+                document.querySelectorAll('#bin-search-wrapper input[type="checkbox"]').forEach(function(cb) {
+                    cb.checked = false;
+                });
+                window.location.hash = '';
+                filter();
+                searchInput.blur();
+            }
+            return;
+        }
+        // Letter keys focus search
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            searchInput.focus();
+        }
+    });
+
+    window.addEventListener('hashchange', function() {
+        // Clear all checkboxes first
+        document.querySelectorAll('#bin-search-wrapper input[type="checkbox"]').forEach(function(cb) {
+            cb.checked = false;
+        });
+        restoreFromHash();
+    });
+
+    restoreFromHash();
+}
+
+document.addEventListener('DOMContentLoaded', setup);
+</script>

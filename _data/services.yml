@@ -1,0 +1,83 @@
+- id: SMB
+  label: SMB
+  description: Server Message Block — file sharing, often on ports 139/445.
+
+- id: HTTP
+  label: HTTP/HTTPS
+  description: Web services on ports 80/443/8080/8443.
+
+- id: SSH
+  label: SSH
+  description: Secure Shell — remote access on port 22.
+
+- id: FTP
+  label: FTP
+  description: File Transfer Protocol on port 21.
+
+- id: DNS
+  label: DNS
+  description: Domain Name System on port 53.
+
+- id: LDAP
+  label: LDAP
+  description: Lightweight Directory Access Protocol on ports 389/636.
+
+- id: Kerberos
+  label: Kerberos
+  description: Authentication protocol on port 88.
+
+- id: RDP
+  label: RDP
+  description: Remote Desktop Protocol on port 3389.
+
+- id: WinRM
+  label: WinRM
+  description: Windows Remote Management on port 5985/5986.
+
+- id: MSSQL
+  label: MSSQL
+  description: Microsoft SQL Server on port 1433.
+
+- id: MySQL
+  label: MySQL
+  description: MySQL database on port 3306.
+
+- id: SNMP
+  label: SNMP
+  description: Simple Network Management Protocol on port 161.
+
+- id: SMTP
+  label: SMTP
+  description: Simple Mail Transfer Protocol on port 25/587.
+
+- id: RPC
+  label: RPC
+  description: Remote Procedure Call on port 135.
+
+- id: NFS
+  label: NFS
+  description: Network File System on port 2049.
+
+- id: WMI
+  label: WMI
+  description: Windows Management Instrumentation via DCOM.
+
+- id: DCOM
+  label: DCOM
+  description: Distributed Component Object Model.
+
+- id: NTLM
+  label: NTLM
+  description: NT LAN Manager authentication protocol.
+
+- id: VNC
+  label: VNC
+  description: Virtual Network Computing on port 5900.
+
+- id: Redis
+  label: Redis
+  description: Redis in-memory database on port 6379.
+
+- id: PostgreSQL
+  label: PostgreSQL
+  description: PostgreSQL database on port 5432.

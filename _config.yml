@@ -1,0 +1,17 @@
+---
+title: PentComs
+baseurl: /pentcoms
+
+exclude: ['/scripts', '/Gemfile', '/Makefile', '/README.md']
+
+permalink: pretty
+
+collections:
+  pentcoms:
+    output: true
+
+defaults:
+  - scope:
+      path: '_pentcoms'
+    values:
+      layout: bin

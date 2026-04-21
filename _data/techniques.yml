@@ -1,0 +1,141 @@
+# Active Directory Techniques
+- id: Kerberoasting
+  label: Kerberoasting
+  description: Requesting TGS tickets for SPNs and cracking them offline.
+
+- id: AS-REP_Roasting
+  label: AS-REP Roasting
+  description: Extracting AS-REP hashes for accounts without pre-authentication.
+
+- id: Pass-the-Hash
+  label: Pass-the-Hash
+  description: Authenticating with an NTLM hash instead of a plaintext password.
+
+- id: Pass-the-Ticket
+  label: Pass-the-Ticket
+  description: Using a stolen Kerberos ticket for authentication.
+
+- id: Golden_Ticket
+  label: Golden Ticket
+  description: Forging a TGT using the KRBTGT hash for domain persistence.
+
+- id: Silver_Ticket
+  label: Silver Ticket
+  description: Forging a TGS for a specific service using its hash.
+
+- id: DCSync
+  label: DCSync
+  description: Replicating AD credentials using Directory Replication Service.
+
+- id: NTLM_Relay
+  label: NTLM Relay
+  description: Relaying captured NTLM authentication to another service.
+
+- id: LLMNR_Poisoning
+  label: LLMNR/NBT-NS Poisoning
+  description: Capturing hashes via Link-Local Multicast Name Resolution poisoning.
+
+- id: BloodHound
+  label: BloodHound Collection
+  description: Collecting AD relationship data for attack path analysis.
+
+- id: Password_Spraying
+  label: Password Spraying
+  description: Trying a few common passwords against many accounts.
+
+- id: Delegation_Abuse
+  label: Delegation Abuse
+  description: Abusing unconstrained, constrained, or RBCD delegation.
+
+- id: ACL_Abuse
+  label: ACL Abuse
+  description: Exploiting misconfigured AD access control lists.
+
+- id: GPO_Abuse
+  label: GPO Abuse
+  description: Abusing Group Policy Objects for code execution.
+
+- id: ADCS_Abuse
+  label: ADCS Abuse
+  description: Exploiting Active Directory Certificate Services misconfigurations.
+
+- id: Shadow_Credentials
+  label: Shadow Credentials
+  description: Adding Key Credentials to an AD object for authentication.
+
+- id: Trust_Abuse
+  label: Trust Abuse
+  description: Exploiting AD trust relationships for cross-domain access.
+
+# General Techniques
+- id: SQLi
+  label: SQL Injection
+  description: Injecting SQL queries through user input.
+
+- id: LFI
+  label: LFI/RFI
+  description: Local or Remote File Inclusion vulnerabilities.
+
+- id: Command_Injection
+  label: Command Injection
+  description: Injecting OS commands through application input.
+
+- id: File_Upload
+  label: File Upload
+  description: Exploiting unrestricted file upload functionality.
+
+- id: Reverse_Shell
+  label: Reverse Shell
+  description: Establishing a reverse connection back to the attacker.
+
+- id: Port_Forwarding
+  label: Port Forwarding
+  description: Forwarding ports through a compromised host.
+
+- id: Pivoting
+  label: Pivoting
+  description: Using a compromised host to reach internal networks.
+
+- id: Tunneling
+  label: Tunneling
+  description: Encapsulating traffic through an established connection.
+
+- id: Token_Impersonation
+  label: Token Impersonation
+  description: Impersonating another user's security token.
+
+- id: SUID_Abuse
+  label: SUID Abuse
+  description: Exploiting SUID binaries for privilege escalation.
+
+- id: Sudo_Abuse
+  label: Sudo Abuse
+  description: Exploiting sudo misconfigurations for privilege escalation.
+
+- id: Cron_Abuse
+  label: Cron Abuse
+  description: Exploiting cron jobs for privilege escalation.
+
+- id: Kernel_Exploit
+  label: Kernel Exploit
+  description: Exploiting kernel vulnerabilities for privilege escalation.
+
+- id: SSRF
+  label: SSRF
+  description: Server-Side Request Forgery to access internal resources.
+
+- id: XXE
+  label: XXE
+  description: XML External Entity injection for file read or SSRF.
+
+- id: Deserialization
+  label: Deserialization
+  description: Exploiting insecure deserialization for code execution.
+
+- id: Path_Traversal
+  label: Path Traversal
+  description: Accessing files outside the intended directory.
+
+- id: Brute_Force
+  label: Brute Force
+  description: Systematically trying credentials until access is gained.
