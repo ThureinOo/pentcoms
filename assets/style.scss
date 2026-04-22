@@ -2,21 +2,20 @@
 ---
 
 $accent: #e74c3c;
-$lighter: #f8f9fa;
-$hover: #ff6b6b;
+$green: #07bf07;
+$green-hover: #00ff00;
+$green-dark: #059405;
 $text: #333;
 $bg: #fff;
 $border: #ddd;
 $code-bg: #f5f5f5;
-$btn-bg: #e9ecef;
-$btn-active: #e74c3c;
-$btn-active-text: #fff;
+$muted: #777;
 
 * { box-sizing: border-box; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 20px;
     color: $text;
@@ -24,70 +23,89 @@ body {
     line-height: 1.6;
 }
 
-h1#page-title {
-    color: $accent;
-    font-size: 2em;
-    margin: 0;
-}
-
+// Title bar
 #title-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
     border-bottom: 2px solid $accent;
+}
+
+#title-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+h1#page-title {
+    color: $accent;
+    font-size: 1.8em;
+    margin: 0;
+    font-weight: 800;
 }
 
 #title-right {
     display: flex;
     align-items: center;
-    gap: 15px;
-}
-
-a {
-    color: $accent;
-    text-decoration: none;
-    &:hover { color: $hover; text-decoration: underline; }
-}
-
-// Settings Panel
-#settings-toggle {
-    margin-bottom: 10px;
+    gap: 12px;
 }
 
 #settings-btn {
     background: none;
-    border: 1px solid $border;
-    padding: 6px 14px;
-    border-radius: 4px;
+    border: none;
+    font-size: 1.4em;
     cursor: pointer;
-    font-size: 0.9em;
-    color: $text;
-    &:hover { border-color: $accent; color: $accent; }
+    color: $muted;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.2s;
+    &:hover { color: $accent; }
 }
 
+// Links
+a {
+    color: $accent;
+    text-decoration: none;
+    &:hover { color: darken($accent, 10%); text-decoration: underline; }
+}
+
+// Description paragraph
+.page-content > p {
+    text-align: center;
+    margin-bottom: 25px;
+    color: $muted;
+    font-size: 0.95em;
+}
+
+// Settings Panel
 #settings-panel {
-    background: $lighter;
     border: 1px solid $border;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .settings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
 }
 
 .setting-field {
     label {
         display: block;
-        font-size: 0.8em;
+        font-size: 0.75em;
         font-weight: 600;
         margin-bottom: 3px;
-        color: #666;
+        color: $muted;
+        text-transform: uppercase;
     }
     input {
         width: 100%;
@@ -95,72 +113,77 @@ a {
         border: 1px solid $border;
         border-radius: 4px;
         font-size: 0.9em;
-        &:focus { outline: none; border-color: $accent; }
+        &:focus { outline: none; border-color: $green; }
     }
 }
 
-// Filter Rows
-#filter-rows {
+// Filter container
+#filter-container {
+    margin-bottom: 20px;
+}
+
+.filter-grid-row {
     margin-bottom: 15px;
+
+    &.two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    &.one-col {
+        display: block;
+    }
 }
 
-.filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 8px 12px;
-    background: $lighter;
-    border: 1px solid $border;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    gap: 6px;
+.filter-group {
+    text-align: center;
+
+    &.center {
+        max-width: 900px;
+        margin: 0 auto;
+    }
 }
 
-.filter-section {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 5px;
-}
-
-.filter-divider {
-    width: 1px;
-    height: 28px;
-    background: $border;
-    margin: 0 10px;
-}
-
-.filter-label {
-    font-size: 0.8em;
+.filter-title {
+    font-size: 0.95em;
     font-weight: 700;
-    color: #666;
+    color: $accent;
+    margin: 0 0 10px 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-right: 4px;
-    white-space: nowrap;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
 }
 
 .filter-btn {
     display: inline-block;
-    padding: 4px 10px;
-    border: 1px solid $border;
-    border-radius: 4px;
-    background: $btn-bg;
-    color: $text;
-    font-size: 0.8em;
+    padding: 6px 14px;
+    border: 2px solid $green;
+    border-radius: 5px;
+    background: transparent;
+    color: $green-dark;
+    font-size: 0.85em;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.15s ease;
     white-space: nowrap;
 
     &:hover {
-        border-color: $accent;
-        color: $accent;
+        background: rgba($green, 0.08);
+        border-color: $green-hover;
+        color: $green;
     }
 
     &.active {
-        background: $btn-active;
-        color: $btn-active-text;
-        border-color: $btn-active;
+        background: $green;
+        color: #fff;
+        border-color: $green;
     }
 }
 
@@ -174,7 +197,7 @@ a {
     margin-bottom: 20px;
     outline: none;
     transition: border-color 0.2s;
-    &:focus { border-color: $accent; }
+    &:focus { border-color: $green; }
 }
 
 // Command table
@@ -187,7 +210,7 @@ a {
 
 .bin-row {
     border-bottom: 1px solid $border;
-    &:hover { background: $lighter; }
+    &:hover { background: #f9f9f9; }
     td { padding: 12px 8px; }
 }
 
@@ -195,16 +218,11 @@ a {
     font-weight: bold;
     font-size: 1.1em;
     color: $accent;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
 }
 
-.bin-description {
-    display: block;
-    font-size: 0.85em;
-    color: #777;
-    margin: 2px 0;
-}
-
-// Filter tags
+// Filter tags on entries
 .filter-list {
     list-style: none;
     padding: 0;
@@ -214,7 +232,7 @@ a {
     gap: 4px;
     li a {
         display: inline-block;
-        padding: 2px 8px;
+        padding: 1px 7px;
         border-radius: 3px;
         font-size: 0.7em;
         text-decoration: none;
@@ -252,7 +270,7 @@ a {
 .copy-img {
     width: 18px;
     height: 18px;
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: pointer;
     &:hover { opacity: 1; }
 }
@@ -261,8 +279,8 @@ a {
 .switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 26px;
+    width: 46px;
+    height: 24px;
 }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider {
@@ -275,14 +293,14 @@ a {
 .slider:before {
     position: absolute;
     content: "";
-    height: 20px; width: 20px;
+    height: 18px; width: 18px;
     left: 3px; bottom: 3px;
     background-color: white;
     transition: .3s;
 }
 input:checked + .slider { background-color: $accent; }
-input:checked + .slider:before { transform: translateX(24px); }
-.slider.round { border-radius: 26px; }
+input:checked + .slider:before { transform: translateX(22px); }
+.slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
 
 // Permalink
@@ -296,9 +314,13 @@ h2:hover .permalink, h3:hover .permalink { opacity: 1; }
 
 // Responsive
 @media (max-width: 768px) {
-    .filter-row { flex-direction: column; align-items: flex-start; }
-    .filter-divider { width: 100%; height: 1px; margin: 6px 0; }
-    .settings-grid { grid-template-columns: repeat(2, 1fr); }
+    .filter-grid-row.two-col {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
     #title-wrapper {
         flex-direction: column;
         align-items: flex-start;

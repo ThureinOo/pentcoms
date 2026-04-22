@@ -1,10 +1,16 @@
 <div id="title-wrapper">
-    <h1 id="page-title">{{ include.title }}</h1>
+    <div id="title-left">
+        <a href="{{ site.baseurl }}/">
+            <img src="{{ site.baseurl }}/assets/logo.svg" alt="PentComs" class="logo-icon"/>
+        </a>
+        <h1 id="page-title">{{ include.title }}</h1>
+    </div>
     <div id="title-right">
-        <a class="github-button" href="https://github.com/thureinoo/pentcoms" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
-        <label class="switch">
+        <button id="settings-btn" onclick="toggleSettings()" title="Settings">&#9881;</button>
+        <label class="switch" title="Toggle dark mode">
             <input type="checkbox">
             <span class="slider round"></span>
         </label>
+        <a class="github-button" href="https://github.com/ThureinOo/pentcoms" data-icon="octicon-star" data-show-count="true" aria-label="Star on GitHub">Star</a>
     </div>
 </div>

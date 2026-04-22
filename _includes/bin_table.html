@@ -1,7 +1,4 @@
-<!-- Settings Panel -->
-<div id="settings-toggle">
-    <button id="settings-btn" onclick="toggleSettings()">&#9881; Settings</button>
-</div>
+<!-- Settings Panel (hidden by default) -->
 <div id="settings-panel" style="display:none;">
     <div class="settings-grid">
         <div class="setting-field">
@@ -27,60 +24,70 @@
     </div>
 </div>
 
-<!-- Filter Rows -->
-<div id="filter-rows">
+<!-- Filter Sections -->
+<div id="filter-container">
 
     <!-- Row 1: What You Have | Target OS -->
-    <div class="filter-row">
-        <div class="filter-section">
-            <span class="filter-label">What you have:</span>
-            {% for pair in site.data.items %}
-            <button class="filter-btn" data-filter="items" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
+    <div class="filter-grid-row two-col">
+        <div class="filter-group">
+            <h3 class="filter-title">What you have:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.items %}
+                <button class="filter-btn" data-filter="items" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
         </div>
-        <div class="filter-divider"></div>
-        <div class="filter-section">
-            <span class="filter-label">Target OS:</span>
-            {% for pair in site.data.target_os %}
-            <button class="filter-btn" data-filter="target_os" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Row 2: Services -->
-    <div class="filter-row">
-        <div class="filter-section">
-            <span class="filter-label">Services:</span>
-            {% for pair in site.data.services %}
-            <button class="filter-btn" data-filter="services" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
+        <div class="filter-group">
+            <h3 class="filter-title">Target OS:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.target_os %}
+                <button class="filter-btn" data-filter="target_os" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- Row 3: Techniques -->
-    <div class="filter-row">
-        <div class="filter-section">
-            <span class="filter-label">Techniques:</span>
-            {% for pair in site.data.techniques %}
-            <button class="filter-btn" data-filter="techniques" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
+    <!-- Row 2: Services (full width) -->
+    <div class="filter-grid-row one-col">
+        <div class="filter-group center">
+            <h3 class="filter-title">Services:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.services %}
+                <button class="filter-btn" data-filter="services" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- Row 4: Phase | Network Position -->
-    <div class="filter-row">
-        <div class="filter-section">
-            <span class="filter-label">Phase:</span>
-            {% for pair in site.data.phases %}
-            <button class="filter-btn" data-filter="phase" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
+    <!-- Row 3: Phase | Network Position -->
+    <div class="filter-grid-row two-col">
+        <div class="filter-group">
+            <h3 class="filter-title">Phase:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.phases %}
+                <button class="filter-btn" data-filter="phase" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
         </div>
-        <div class="filter-divider"></div>
-        <div class="filter-section">
-            <span class="filter-label">Position:</span>
-            {% for pair in site.data.network_positions %}
-            <button class="filter-btn" data-filter="network_position" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-            {% endfor %}
+        <div class="filter-group">
+            <h3 class="filter-title">Network Position:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.network_positions %}
+                <button class="filter-btn" data-filter="network_position" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 4: Techniques (full width) -->
+    <div class="filter-grid-row one-col">
+        <div class="filter-group center">
+            <h3 class="filter-title">Techniques:</h3>
+            <div class="filter-buttons">
+                {% for pair in site.data.techniques %}
+                <button class="filter-btn" data-filter="techniques" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
@@ -104,10 +111,9 @@
     >
         <td>
             {% capture bin_name %}{% include get_bin_name path=file.path %}{% endcapture %}
-            <span class="bin-name">{{ bin_name }}</span>
+            <a href="{{ site.baseurl }}{{ file.url }}" class="bin-name">{{ bin_name }}</a>
             <a href="javascript:void(0)" onclick="copyCommand(this)" style="float: right;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
             {% include filter_list.html bin=file %}
-            <span class="bin-description">{{ file.description | strip_html | truncatewords: 20 }}</span>
             <ul class="examples">
                 <li>
                     <pre><code class="command-text">{{ file.command | escape }}</code></pre>
@@ -122,7 +128,6 @@
 <p id="no-results" style="display:none; text-align:center; padding: 20px; font-style: italic;">No commands match the selected filters.</p>
 
 <script>
-// Placeholder defaults
 var placeholders = {
     'target_ip':   { default: '10.10.10.1',    selector: '#set-target-ip' },
     'attacker_ip': { default: '10.10.14.1',     selector: '#set-attacker-ip' },
@@ -131,13 +136,11 @@ var placeholders = {
     'password':    { default: 'password123',    selector: '#set-password' }
 };
 
-// Settings panel toggle
 function toggleSettings() {
     var panel = document.getElementById('settings-panel');
     panel.style.display = panel.style.display === 'none' ? '' : 'none';
 }
 
-// Load settings from localStorage
 function loadSettings() {
     Object.keys(placeholders).forEach(function(key) {
         var saved = localStorage.getItem('pentcoms_' + key);
@@ -147,7 +150,6 @@ function loadSettings() {
     });
 }
 
-// Save settings to localStorage and update commands
 function saveSettings() {
     Object.keys(placeholders).forEach(function(key) {
         var val = document.querySelector(placeholders[key].selector).value;
@@ -156,13 +158,11 @@ function saveSettings() {
     replaceAllPlaceholders();
 }
 
-// Replace placeholders in all command blocks
 function replaceAllPlaceholders() {
     var commands = document.querySelectorAll('.command-text');
     commands.forEach(function(el) {
         var text = el.getAttribute('data-original');
         if (!text) return;
-
         Object.keys(placeholders).forEach(function(key) {
             var input = document.querySelector(placeholders[key].selector);
             var newVal = input.value.trim();
@@ -171,7 +171,6 @@ function replaceAllPlaceholders() {
                 text = text.replace(regex, newVal);
             }
         });
-
         el.textContent = text;
     });
 }
@@ -180,14 +179,12 @@ function escapeRegex(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// Store original command text
 function storeOriginals() {
     document.querySelectorAll('.command-text').forEach(function(el) {
         el.setAttribute('data-original', el.textContent);
     });
 }
 
-// Copy command to clipboard
 function copyCommand(el) {
     var row = el.closest('tr');
     var commandText = row.querySelector('.command-text').textContent;
@@ -199,14 +196,12 @@ function copyCommand(el) {
     });
 }
 
-// Toggle filter button
 function toggleFilter(btn) {
     btn.classList.toggle('active');
     updateHash();
     filter();
 }
 
-// Get active filters grouped by category
 function getActiveFilters() {
     var active = {};
     document.querySelectorAll('.filter-btn.active').forEach(function(btn) {
@@ -218,7 +213,6 @@ function getActiveFilters() {
     return active;
 }
 
-// Filter commands
 function filter() {
     var searchInput = document.getElementById('bin-search');
     var textSearch = searchInput.value.toLowerCase().trim();
@@ -229,17 +223,14 @@ function filter() {
     rows.forEach(function(row) {
         var show = true;
 
-        // Text search
         if (textSearch) {
             var name = row.querySelector('.bin-name').textContent.toLowerCase().trim();
             var command = row.querySelector('.command-text').textContent.toLowerCase();
-            var desc = row.querySelector('.bin-description') ? row.querySelector('.bin-description').textContent.toLowerCase() : '';
-            if (name.indexOf(textSearch) === -1 && command.indexOf(textSearch) === -1 && desc.indexOf(textSearch) === -1) {
+            if (name.indexOf(textSearch) === -1 && command.indexOf(textSearch) === -1) {
                 show = false;
             }
         }
 
-        // Filter matching: row must match at least one value in each active category
         if (show) {
             Object.keys(activeFilters).forEach(function(cat) {
                 if (!show) return;
@@ -262,7 +253,6 @@ function filter() {
     }
 }
 
-// URL hash sync
 function updateHash() {
     var parts = [];
     document.querySelectorAll('.filter-btn.active').forEach(function(btn) {
@@ -282,23 +272,17 @@ function restoreFromHash() {
     filter();
 }
 
-// Setup
 document.addEventListener('DOMContentLoaded', function() {
     storeOriginals();
     loadSettings();
     replaceAllPlaceholders();
 
-    // Search input
     document.getElementById('bin-search').addEventListener('input', filter);
 
-    // Settings inputs — save on change
     document.querySelectorAll('#settings-panel input').forEach(function(input) {
-        input.addEventListener('input', function() {
-            saveSettings();
-        });
+        input.addEventListener('input', function() { saveSettings(); });
     });
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         var search = document.getElementById('bin-search');
         if (e.target.tagName === 'INPUT') {
