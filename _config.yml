@@ -7,11 +7,11 @@ exclude: ['/scripts', '/Gemfile', '/Makefile', '/README.md']
 permalink: pretty
 
 collections:
-  pentcoms:
+  senshu:
     output: true
 
 defaults:
   - scope:
-      path: '_pentcoms'
+      path: '_senshu'
     values:
       layout: bin

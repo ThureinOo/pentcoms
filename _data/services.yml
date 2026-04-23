@@ -52,23 +52,11 @@
 
 - id: RPC
   label: RPC
-  description: Remote Procedure Call on port 135.
+  description: Remote Procedure Call on port 135 (includes WMI/DCOM).
 
 - id: NFS
   label: NFS
   description: Network File System on port 2049.
-
-- id: WMI
-  label: WMI
-  description: Windows Management Instrumentation via DCOM.
-
-- id: DCOM
-  label: DCOM
-  description: Distributed Component Object Model.
-
-- id: NTLM
-  label: NTLM
-  description: NT LAN Manager authentication protocol.
 
 - id: VNC
   label: VNC
@@ -81,3 +69,7 @@
 - id: PostgreSQL
   label: PostgreSQL
   description: PostgreSQL database on port 5432.
+
+- id: ADCS
+  label: ADCS
+  description: Active Directory Certificate Services.

@@ -1,10 +1,6 @@
-- id: Recon
-  label: Recon
-  description: Passive and active information gathering before engaging the target.
-
-- id: Scanning
-  label: Scanning
-  description: Port scanning and service discovery on the target.
+- id: Reconnaissance
+  label: Reconnaissance
+  description: Passive/active information gathering, port scanning, and service discovery.
 
 - id: Enumeration
   label: Enumeration
@@ -12,24 +8,16 @@
 
 - id: Exploitation
   label: Exploitation
-  description: Gaining initial access by exploiting vulnerabilities.
+  description: Gaining access by exploiting vulnerabilities or using credentials.
 
 - id: Post-Exploitation
   label: Post-Exploitation
-  description: Actions taken after gaining initial access.
+  description: Actions after gaining access — credential dumping, data collection.
 
 - id: PrivEsc
   label: Privilege Escalation
-  description: Escalating privileges from a low-privileged user.
-
-- id: Lateral_Movement
-  label: Lateral Movement
-  description: Moving from one compromised host to another within the network.
+  description: Escalating from low-privileged user to root/SYSTEM/admin.
 
 - id: Persistence
   label: Persistence
   description: Maintaining access to the compromised environment.
-
-- id: Exfiltration
-  label: Exfiltration
-  description: Extracting data from the target environment.

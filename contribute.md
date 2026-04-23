@@ -13,7 +13,7 @@ Fork [Senshu on GitHub](https://github.com/ThureinOo/senshu) and clone it locall
 
 ### 2. Create a new file
 
-Add a `.md` file in the `_pentcoms/` directory. Name it after the tool, using hyphens for spaces (e.g., `Impacket-PsExec.md`).
+Add a `.md` file in the `_senshu/` directory. Name it after the tool, using hyphens for spaces (e.g., `Impacket-PsExec.md`).
 
 ### 3. Use the following YAML front matter format
 
@@ -25,10 +25,10 @@ description: |
   Brief description of what the tool/command does and when to use it.
 
   Reference values:
-    Target IP: 10.10.10.1
-    Domain: test.local
-    Username: pentuser
-    Password: P@ssw0rd123
+    Target IP: 10.10.10.27
+    Domain: senshu.sh
+    Username: sec_user
+    Password: P@ssw0rd
 command: |
   your-command-here
 phase:
@@ -71,7 +71,7 @@ references:
 
 ### 5. Guidelines
 
-- Use **placeholder values** consistently: `pentuser`, `P@ssw0rd123`, `test.local`, `10.10.10.1` (attacker: `10.10.14.1`)
+- Use **placeholder values** consistently: `sec_user`, `P@ssw0rd`, `senshu.sh`, `10.10.10.27` (attacker: `10.10.10.21`)
 - Commands should be **verified and working**
 - Include **multiple variants** where useful (e.g., with password vs. with hash)
 - Include at least one **reference link** (tool repository or documentation)

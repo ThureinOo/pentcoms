@@ -1,82 +1,157 @@
-# Active Directory Techniques
-- id: Kerberoasting
-  label: Kerberoasting
-  description: Requesting TGS tickets for SPNs and cracking them offline.
-
-- id: AS-REP_Roasting
-  label: AS-REP Roasting
-  description: Extracting AS-REP hashes for accounts without pre-authentication.
-
-- id: Pass-the-Hash_Ticket
-  label: Pass-the-Hash/Ticket
-  description: Authenticating with an NTLM hash or stolen Kerberos ticket.
-
-- id: Ticket_Forgery
-  label: Ticket Forgery
-  description: Forging Golden Tickets (TGT) or Silver Tickets (TGS) for persistence.
-
-- id: DCSync
-  label: DCSync
-  description: Replicating AD credentials using Directory Replication Service.
-
-- id: NTLM_Relay_Poisoning
-  label: NTLM Relay/Poisoning
-  description: Capturing and relaying NTLM authentication via LLMNR/NBT-NS poisoning.
-
-- id: BloodHound
-  label: BloodHound
-  description: Collecting AD relationship data for attack path analysis.
-
-- id: Password_Spraying
-  label: Password Spraying
-  description: Trying common passwords against many accounts to find valid credentials.
-
-- id: Delegation_Abuse
-  label: Delegation Abuse
-  description: Abusing unconstrained, constrained, or resource-based constrained delegation.
-
-- id: ACL_Abuse
-  label: ACL Abuse
-  description: Exploiting misconfigured AD access control lists for privilege escalation.
-
-- id: ADCS_Abuse
-  label: ADCS Abuse
-  description: Exploiting Active Directory Certificate Services misconfigurations.
-
-- id: Shadow_Credentials
-  label: Shadow Credentials
-  description: Adding Key Credentials to an AD object for alternative authentication.
-
 # Web Techniques
-- id: Web_Injection
-  label: Web Injection
-  description: SQL injection, command injection, SSRF, and other server-side injection attacks.
+- id: SQLi
+  label: SQL Injection
 
-- id: Web_File_Attack
-  label: Web File Attack
-  description: LFI/RFI, file upload bypass, and path traversal attacks.
+- id: LFI_RFI
+  label: LFI/RFI
+
+- id: Command_Injection
+  label: Command Injection
+
+- id: File_Upload
+  label: File Upload
+
+- id: NoSQL_Injection
+  label: NoSQL Injection
+
+- id: XXE
+  label: XXE
+
+- id: SSRF
+  label: SSRF
+
+- id: SSTI
+  label: SSTI
 
 - id: Deserialization
   label: Deserialization
-  description: Exploiting insecure deserialization for remote code execution.
 
-# General Techniques
-- id: Reverse_Shell
-  label: Reverse Shell
-  description: Establishing a reverse connection back to the attacker machine.
+# AD / Network Techniques
+- id: Kerberoasting
+  label: Kerberoasting
 
-- id: Pivoting_Tunneling
-  label: Pivoting/Tunneling
-  description: Port forwarding and tunneling through compromised hosts to reach internal networks.
+- id: AS-REP_Roasting
+  label: AS-REP Roasting
+
+- id: Pass-the-Hash
+  label: Pass-the-Hash
+
+- id: Pass-the-Ticket
+  label: Pass-the-Ticket
+
+- id: NTLM_Relay
+  label: NTLM Relay
+
+- id: DCSync
+  label: DCSync
+
+- id: BloodHound
+  label: BloodHound
+
+- id: Password_Spraying
+  label: Password Spraying
+
+- id: ACL_Abuse
+  label: ACL Abuse
+
+- id: ADCS_Abuse
+  label: ADCS Abuse
+
+- id: Shadow_Credentials
+  label: Shadow Credentials
+
+- id: Delegation_Abuse
+  label: Delegation Abuse
+
+- id: Ticket_Forgery
+  label: Ticket Forgery
+
+# Windows PrivEsc Techniques
+- id: Service_Exploit
+  label: Service Exploit
+
+- id: Registry_Exploit
+  label: Registry Exploit
+
+- id: UAC_Bypass
+  label: UAC Bypass
+
+- id: DLL_Hijack
+  label: DLL Hijack
 
 - id: Token_Impersonation
   label: Token Impersonation
-  description: Impersonating another user's security token for privilege escalation.
 
-- id: Linux_Misconfig
-  label: Linux Misconfig
-  description: Exploiting SUID binaries, sudo misconfigs, cron jobs, and writable paths.
+- id: AlwaysInstallElevated
+  label: AlwaysInstallElevated
+
+- id: AutoRun_Exploit
+  label: AutoRun Exploit
 
 - id: Kernel_Exploit
   label: Kernel Exploit
-  description: Exploiting kernel vulnerabilities for local privilege escalation.
+
+# Linux PrivEsc Techniques
+- id: SUID_Abuse
+  label: SUID Abuse
+
+- id: Sudo_Abuse
+  label: Sudo Abuse
+
+- id: Cron_Abuse
+  label: Cron Abuse
+
+- id: Capability_Abuse
+  label: Capability Abuse
+
+- id: NFS_Abuse
+  label: NFS Abuse
+
+# macOS PrivEsc Techniques
+- id: TCC_Bypass
+  label: TCC Bypass
+
+- id: Dylib_Hijack
+  label: Dylib Hijack
+
+- id: LaunchDaemon_Abuse
+  label: LaunchDaemon Abuse
+
+# Web Techniques (additional)
+- id: IDOR
+  label: IDOR
+
+- id: JWT_Attack
+  label: JWT Attack
+
+- id: API_Testing
+  label: API Testing
+
+- id: CORS_Misconfiguration
+  label: CORS Misconfig
+
+- id: WebSocket_Attack
+  label: WebSocket Attack
+
+# AD Techniques (additional)
+- id: GPP_Passwords
+  label: GPP Passwords
+
+- id: LAPS_Abuse
+  label: LAPS Abuse
+
+- id: DNS_Admin_Abuse
+  label: DNS Admin Abuse
+
+# Linux PrivEsc Techniques (additional)
+- id: Docker_Escape
+  label: Docker Escape
+
+- id: Wildcard_Injection
+  label: Wildcard Injection
+
+- id: LD_PRELOAD
+  label: LD_PRELOAD
+
+- id: Python_Hijack
+  label: Python Hijack

@@ -20,24 +20,23 @@
     {% endif %}
     {% endfor %}
 
+    {% if include.bin.commands %}
+    {% for block in include.bin.commands %}
+    <li><a class="tag-item">{{ block.have | replace: '_', ' ' }}</a></li>
+    {% endfor %}
+    {% else %}
     {% for pair in site.data.items %}
     {% assign fid = pair.id %}
     {% if include.bin.items contains fid %}
     <li><a class="tag-item">{{ pair.label }}</a></li>
     {% endif %}
     {% endfor %}
+    {% endif %}
 
     {% for pair in site.data.techniques %}
     {% assign fid = pair.id %}
     {% if include.bin.techniques contains fid %}
     <li><a class="tag-technique">{{ pair.label }}</a></li>
-    {% endif %}
-    {% endfor %}
-
-    {% for pair in site.data.network_positions %}
-    {% assign fid = pair.id %}
-    {% if include.bin.network_position contains fid %}
-    <li><a class="tag-position">{{ pair.label }}</a></li>
     {% endif %}
     {% endfor %}
 </ul>

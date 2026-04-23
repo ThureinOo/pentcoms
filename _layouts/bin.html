@@ -10,13 +10,25 @@ layout: common
 
 {{ page.description | markdownify }}
 
+{% if page.commands %}
+{% for block in page.commands %}
+<h3 class="have-section-title">{{ block.have | replace: '_', ' ' }}</h3>
+<a href="javascript:void(0)" onclick="copySectionCommand(this)" style="float: right; margin-top: -35px;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
+<ul class="examples">
+    <li>
+        <pre><code class="command-text">{{ block.cmd | escape }}</code></pre>
+    </li>
+</ul>
+{% endfor %}
+{% else %}
 Command:
 <a href="javascript:void(0)" onClick="copyFunction_com()" style="float: right; margin-bottom: -10px;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" id="code_img"/></a>
 <ul class="examples">
     <li>
-	<pre><code id="code_text" class="command-text">{{ page.command | escape }}</code></pre>
+        <pre><code id="code_text" class="command-text">{{ page.command | escape }}</code></pre>
     </li>
 </ul>
+{% endif %}
 
 References:
 <br>
@@ -37,25 +49,38 @@ function copyFunction_com() {
      });
 }
 
+function copySectionCommand(el) {
+    var section = el.nextElementSibling;
+    var code = section.querySelector('.command-text');
+    if (code) {
+        navigator.clipboard.writeText(code.innerText.replace(/\n+$/, "")).then(function() {
+            var img = el.querySelector('img');
+            img.alt = "Copied";
+            img.title = "Copied";
+            setTimeout(function() { img.alt = "Copy"; img.title = "Copy"; }, 2000);
+        });
+    }
+}
+
 // Placeholder replacement on detail pages
 document.addEventListener('DOMContentLoaded', function() {
     var placeholders = {
-        'target_ip':   { default: '10.10.10.1',  key: 'pentcoms_target_ip' },
-        'attacker_ip': { default: '10.10.14.1',   key: 'pentcoms_attacker_ip' },
-        'domain':      { default: 'test.local',   key: 'pentcoms_domain' },
-        'username':    { default: 'pentuser',       key: 'pentcoms_username' },
-        'password':    { default: 'P@ssw0rd123',   key: 'pentcoms_password' }
+        'target_ip':   { default: '10.10.10.27',  key: 'senshu_target_ip' },
+        'attacker_ip': { default: '10.10.10.21',  key: 'senshu_attacker_ip' },
+        'domain':      { default: 'senshu.sh',    key: 'senshu_domain' },
+        'username':    { default: 'sec_user',      key: 'senshu_username' },
+        'password':    { default: 'P@ssw0rd',     key: 'senshu_password' }
     };
-    var el = document.getElementById('code_text');
-    if (!el) return;
-    var text = el.textContent;
-    Object.keys(placeholders).forEach(function(k) {
-        var saved = localStorage.getItem(placeholders[k].key);
-        if (saved && saved.trim()) {
-            var regex = new RegExp(placeholders[k].default.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-            text = text.replace(regex, saved);
-        }
+    document.querySelectorAll('.command-text').forEach(function(el) {
+        var text = el.textContent;
+        Object.keys(placeholders).forEach(function(k) {
+            var saved = localStorage.getItem(placeholders[k].key);
+            if (saved && saved.trim()) {
+                var regex = new RegExp(placeholders[k].default.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                text = text.replace(regex, saved);
+            }
+        });
+        el.textContent = text;
     });
-    el.textContent = text;
 });
 </script>

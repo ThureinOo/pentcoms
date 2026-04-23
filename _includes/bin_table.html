@@ -3,23 +3,23 @@
     <div class="settings-grid">
         <div class="setting-field">
             <label for="set-target-ip">Target IP</label>
-            <input type="text" id="set-target-ip" placeholder="10.10.10.1" value="">
+            <input type="text" id="set-target-ip" placeholder="10.10.10.27" value="">
         </div>
         <div class="setting-field">
             <label for="set-attacker-ip">Attacker IP</label>
-            <input type="text" id="set-attacker-ip" placeholder="10.10.14.1" value="">
+            <input type="text" id="set-attacker-ip" placeholder="10.10.10.21" value="">
         </div>
         <div class="setting-field">
             <label for="set-domain">Domain</label>
-            <input type="text" id="set-domain" placeholder="test.local" value="">
+            <input type="text" id="set-domain" placeholder="senshu.sh" value="">
         </div>
         <div class="setting-field">
             <label for="set-username">Username</label>
-            <input type="text" id="set-username" placeholder="pentuser" value="">
+            <input type="text" id="set-username" placeholder="sec_user" value="">
         </div>
         <div class="setting-field">
             <label for="set-password">Password</label>
-            <input type="text" id="set-password" placeholder="P@ssw0rd123" value="">
+            <input type="text" id="set-password" placeholder="P@ssw0rd" value="">
         </div>
     </div>
 </div>
@@ -47,9 +47,9 @@
         </div>
     </div>
 
-    <!-- Row 2: Target OS | Network Position -->
-    <div class="filter-grid-row two-col">
-        <div class="filter-group">
+    <!-- Row 2: Target OS (full width) -->
+    <div class="filter-grid-row one-col">
+        <div class="filter-group center">
             <h3 class="filter-title">Target OS:</h3>
             <div class="filter-buttons">
                 {% for pair in site.data.target_os %}
@@ -57,20 +57,12 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="filter-group">
-            <h3 class="filter-title">Network Position:</h3>
-            <div class="filter-buttons">
-                {% for pair in site.data.network_positions %}
-                <button class="filter-btn" data-filter="network_position" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
-                {% endfor %}
-            </div>
-        </div>
     </div>
 
-    <!-- Row 3: Services (full width) -->
+    <!-- Row 3: Service (full width) -->
     <div class="filter-grid-row one-col">
         <div class="filter-group center">
-            <h3 class="filter-title">Services:</h3>
+            <h3 class="filter-title">Service:</h3>
             <div class="filter-buttons">
                 {% for pair in site.data.services %}
                 <button class="filter-btn" data-filter="services" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
@@ -79,13 +71,13 @@
         </div>
     </div>
 
-    <!-- Row 4: Techniques (full width) -->
-    <div class="filter-grid-row one-col">
+    <!-- Row 4: Techniques (dynamic — only shows relevant buttons) -->
+    <div class="filter-grid-row one-col" id="technique-row" style="display:none;">
         <div class="filter-group center">
-            <h3 class="filter-title">Techniques:</h3>
-            <div class="filter-buttons">
+            <h3 class="filter-title">Technique:</h3>
+            <div class="filter-buttons" id="technique-buttons">
                 {% for pair in site.data.techniques %}
-                <button class="filter-btn" data-filter="techniques" data-value="{{ pair.id }}" onclick="toggleFilter(this)">{{ pair.label }}</button>
+                <button class="filter-btn technique-btn" data-filter="techniques" data-value="{{ pair.id }}" onclick="toggleFilter(this)" style="display:none;">{{ pair.label }}</button>
                 {% endfor %}
             </div>
         </div>
@@ -94,7 +86,7 @@
 </div>
 
 <!-- Search Bar -->
-<input id="bin-search" type="text" placeholder="Search among {{ site.pentcoms | size }} commands..."/>
+<input id="bin-search" type="text" placeholder="Search among {{ site.senshu | size }} commands..."/>
 
 <!-- Filter Count -->
 <p id="filter-count" style="text-align:center; margin: -10px 0 15px 0; font-size: 0.9em; color: #777;"></p>
@@ -102,26 +94,39 @@
 <!-- Command Table -->
 <div id="bin-table-wrapper">
 <table id="bin-table">
-    {% assign pentcoms_sorted = site.pentcoms | reverse %}
-    {% for file in pentcoms_sorted %}
+    {% assign senshu_sorted = site.senshu | reverse %}
+    {% for file in senshu_sorted %}
     <tr class="bin-row"
         data-phase="{% for p in file.phase %}{{ p }},{% endfor %}"
         data-target_os="{% for o in file.target_os %}{{ o }},{% endfor %}"
         data-services="{% for s in file.services %}{{ s }},{% endfor %}"
-        data-items="{% for i in file.items %}{{ i }},{% endfor %}"
         data-techniques="{% for t in file.techniques %}{{ t }},{% endfor %}"
-        data-network_position="{% for n in file.network_position %}{{ n }},{% endfor %}"
+        data-all-items="{% if file.commands %}{% for block in file.commands %}{{ block.have }},{% endfor %}{% else %}{% for i in file.items %}{{ i }},{% endfor %}{% endif %}"
     >
         <td>
             {% capture bin_name %}{% include get_bin_name path=file.path %}{% endcapture %}
             <a href="{{ site.baseurl }}{{ file.url }}" class="bin-name">{{ bin_name }}</a>
             <a href="javascript:void(0)" onclick="copyCommand(this)" style="float: right;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
             {% include filter_list.html bin=file %}
-            <ul class="examples">
-                <li>
-                    <pre><code class="command-text">{{ file.command | escape }}</code></pre>
-                </li>
-            </ul>
+
+            {% if file.commands %}
+                {% for block in file.commands %}
+                <div class="command-section" data-have="{{ block.have }}">
+                    <div class="command-section-label">{{ block.have | replace: '_', ' ' }}</div>
+                    <ul class="examples">
+                        <li>
+                            <pre><code class="command-text">{{ block.cmd | escape }}</code></pre>
+                        </li>
+                    </ul>
+                </div>
+                {% endfor %}
+            {% else %}
+                <ul class="examples">
+                    <li>
+                        <pre><code class="command-text">{{ file.command | escape }}</code></pre>
+                    </li>
+                </ul>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}
@@ -136,11 +141,11 @@ Couldn't find the command you're looking for or want to fix a command? <a href="
 
 <script>
 var placeholders = {
-    'target_ip':   { default: '10.10.10.1',    selector: '#set-target-ip' },
-    'attacker_ip': { default: '10.10.14.1',     selector: '#set-attacker-ip' },
-    'domain':      { default: 'test.local',     selector: '#set-domain' },
-    'username':    { default: 'pentuser',        selector: '#set-username' },
-    'password':    { default: 'P@ssw0rd123',    selector: '#set-password' }
+    'target_ip':   { default: '10.10.10.27',   selector: '#set-target-ip' },
+    'attacker_ip': { default: '10.10.10.21',   selector: '#set-attacker-ip' },
+    'domain':      { default: 'senshu.sh',     selector: '#set-domain' },
+    'username':    { default: 'sec_user',      selector: '#set-username' },
+    'password':    { default: 'P@ssw0rd',      selector: '#set-password' }
 };
 
 function toggleSettings() {
@@ -150,7 +155,7 @@ function toggleSettings() {
 
 function loadSettings() {
     Object.keys(placeholders).forEach(function(key) {
-        var saved = localStorage.getItem('pentcoms_' + key);
+        var saved = localStorage.getItem('senshu_' + key);
         if (saved) {
             document.querySelector(placeholders[key].selector).value = saved;
         }
@@ -160,7 +165,7 @@ function loadSettings() {
 function saveSettings() {
     Object.keys(placeholders).forEach(function(key) {
         var val = document.querySelector(placeholders[key].selector).value;
-        localStorage.setItem('pentcoms_' + key, val);
+        localStorage.setItem('senshu_' + key, val);
     });
     replaceAllPlaceholders();
 }
@@ -194,8 +199,16 @@ function storeOriginals() {
 
 function copyCommand(el) {
     var row = el.closest('tr');
-    var commandText = row.querySelector('.command-text').textContent;
-    navigator.clipboard.writeText(commandText.trim()).then(function() {
+    // Collect text from all visible command sections
+    var visibleCmds = row.querySelectorAll('.command-section:not([style*="display: none"]) .command-text, .command-section:not([style*="display:none"]) .command-text');
+    var text = '';
+    if (visibleCmds.length > 0) {
+        visibleCmds.forEach(function(cmd) { text += cmd.textContent.trim() + '\n'; });
+    } else {
+        var single = row.querySelector('.command-text');
+        if (single) text = single.textContent.trim();
+    }
+    navigator.clipboard.writeText(text.trim()).then(function() {
         var img = el.querySelector('img');
         img.alt = "Copied";
         img.title = "Copied";
@@ -224,23 +237,29 @@ function filter() {
     var searchInput = document.getElementById('bin-search');
     var textSearch = searchInput.value.toLowerCase().trim();
     var activeFilters = getActiveFilters();
+    var itemsFilter = activeFilters['items'] || [];
     var rows = document.querySelectorAll('.bin-row');
     var visibleCount = 0;
 
     rows.forEach(function(row) {
         var show = true;
 
+        // Text search — match against entry name and ALL command text
         if (textSearch) {
             var name = row.querySelector('.bin-name').textContent.toLowerCase().trim();
-            var command = row.querySelector('.command-text').textContent.toLowerCase();
-            if (name.indexOf(textSearch) === -1 && command.indexOf(textSearch) === -1) {
+            var allCmdText = '';
+            row.querySelectorAll('.command-text').forEach(function(el) {
+                allCmdText += el.textContent.toLowerCase() + ' ';
+            });
+            if (name.indexOf(textSearch) === -1 && allCmdText.indexOf(textSearch) === -1) {
                 show = false;
             }
         }
 
+        // Filter by phase, target_os, services, techniques (entry-level)
         if (show) {
-            Object.keys(activeFilters).forEach(function(cat) {
-                if (!show) return;
+            ['phase', 'target_os', 'services', 'techniques'].forEach(function(cat) {
+                if (!show || !activeFilters[cat]) return;
                 var required = activeFilters[cat];
                 var rowData = (row.getAttribute('data-' + cat) || '').split(',').filter(function(s) { return s.length > 0; });
                 var hasMatch = required.some(function(r) {
@@ -250,8 +269,32 @@ function filter() {
             });
         }
 
+        // Filter by items — entry level (show row if any section matches)
+        if (show && itemsFilter.length > 0) {
+            var allItems = (row.getAttribute('data-all-items') || '').split(',').filter(function(s) { return s.length > 0; });
+            var hasMatch = itemsFilter.some(function(r) {
+                return allItems.indexOf(r) !== -1;
+            });
+            if (!hasMatch) show = false;
+        }
+
         row.style.display = show ? '' : 'none';
         if (show) visibleCount++;
+
+        // Section-level filtering by "What you have"
+        var sections = row.querySelectorAll('.command-section');
+        if (sections.length > 0 && itemsFilter.length > 0) {
+            sections.forEach(function(section) {
+                var sectionHave = section.getAttribute('data-have');
+                var sectionMatch = itemsFilter.indexOf(sectionHave) !== -1;
+                section.style.display = sectionMatch ? '' : 'none';
+            });
+        } else {
+            // No items filter active — show all sections
+            sections.forEach(function(section) {
+                section.style.display = '';
+            });
+        }
     });
 
     var noResults = document.getElementById('no-results');
@@ -268,12 +311,42 @@ function filter() {
     } else {
         countEl.style.display = 'none';
     }
+
+    // Dynamic technique buttons — show only techniques present in visible rows
+    updateTechniqueButtons();
+}
+
+function updateTechniqueButtons() {
+    var visibleTechniques = new Set();
+    document.querySelectorAll('.bin-row').forEach(function(row) {
+        if (row.style.display === 'none') return;
+        var techs = (row.getAttribute('data-techniques') || '').split(',').filter(function(s) { return s.length > 0; });
+        techs.forEach(function(t) { visibleTechniques.add(t); });
+    });
+
+    var anyVisible = false;
+    document.querySelectorAll('.technique-btn').forEach(function(btn) {
+        var val = btn.getAttribute('data-value');
+        if (visibleTechniques.has(val)) {
+            btn.style.display = '';
+            anyVisible = true;
+        } else {
+            btn.style.display = 'none';
+            // Deactivate hidden technique buttons
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+            }
+        }
+    });
+
+    var techRow = document.getElementById('technique-row');
+    techRow.style.display = anyVisible ? '' : 'none';
 }
 
 function updateHash() {
     var parts = [];
     document.querySelectorAll('.filter-btn.active').forEach(function(btn) {
-        parts.push(btn.getAttribute('data-value'));
+        parts.push(btn.getAttribute('data-filter') + ':' + btn.getAttribute('data-value'));
     });
     window.location.hash = parts.length > 0 ? parts.join('+') : '';
 }
@@ -282,9 +355,12 @@ function restoreFromHash() {
     var hash = window.location.hash.replace('#', '');
     if (!hash) return;
     var parts = hash.split('+');
-    parts.forEach(function(val) {
-        var btn = document.querySelector('.filter-btn[data-value="' + val + '"]');
-        if (btn) btn.classList.add('active');
+    parts.forEach(function(part) {
+        var kv = part.split(':');
+        if (kv.length === 2) {
+            var btn = document.querySelector('.filter-btn[data-filter="' + kv[0] + '"][data-value="' + kv[1] + '"]');
+            if (btn) btn.classList.add('active');
+        }
     });
     filter();
 }
@@ -327,5 +403,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     restoreFromHash();
+    updateTechniqueButtons();
 });
 </script>

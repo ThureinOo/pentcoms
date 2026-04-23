@@ -285,6 +285,36 @@ a {
     .tag-position { background: #34495e; }
 }
 
+// Command section labels (on main page)
+.command-section {
+    margin-top: 6px;
+}
+
+.command-section-label {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.7em;
+    font-weight: 600;
+    color: #fff;
+    background: #1abc9c;
+    margin-bottom: 4px;
+    text-transform: capitalize;
+}
+
+// Have section title (on detail page)
+.have-section-title {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #fff;
+    background: #1abc9c;
+    margin: 15px 0 8px 0;
+    text-transform: capitalize;
+}
+
 // Code blocks
 .examples {
     list-style: none;

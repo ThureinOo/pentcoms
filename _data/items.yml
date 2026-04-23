@@ -4,11 +4,15 @@
 
 - id: Username
   label: Username
-  description: A valid username is known.
+  description: A valid username is known (no password).
 
 - id: Password
   label: Password
-  description: A valid password is known.
+  description: A valid password is known (no username — for spraying).
+
+- id: Credentials
+  label: Credentials
+  description: A valid username + password pair is known.
 
 - id: Hash
   label: Hash

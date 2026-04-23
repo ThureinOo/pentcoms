@@ -26,9 +26,3 @@ title: Filters
 {% for t in site.data.techniques %}| **{{ t.label }}** | {{ t.description | default: "" }} |
 {% endfor %}
 
-### Network Position
-
-| Position | Description |
-|----------|-------------|
-{% for n in site.data.network_positions %}| **{{ n.label }}** | {{ n.description }} |
-{% endfor %}
