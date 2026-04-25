@@ -33,7 +33,7 @@ target_os:
   - Linux
 services: []
 techniques:
-  - Wildcard_Injection
+  - Cron_Abuse
 references:
   - https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks
   - https://www.exploit-db.com/papers/33930

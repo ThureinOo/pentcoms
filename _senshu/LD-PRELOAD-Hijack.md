@@ -31,7 +31,7 @@ target_os:
   - Linux
 services: []
 techniques:
-  - LD_PRELOAD
+  - Library_Hijack
 references:
   - https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld_preload-and-ld_library_path
   - https://gtfobins.github.io/

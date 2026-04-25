@@ -28,7 +28,7 @@ target_os:
   - Windows
 services: []
 techniques:
-  - AMSI_Bypass
+  - Defense_Evasion
 references:
   - https://amsi.fail/
   - https://rastamouse.me/memory-patching-amsi-bypass/

@@ -42,7 +42,7 @@ target_os:
 services:
   - HTTP
 techniques:
-  - SQLi
+  - Injection
 references:
   - https://github.com/sqlmapproject/sqlmap
   - https://owasp.org/www-community/attacks/SQL_Injection

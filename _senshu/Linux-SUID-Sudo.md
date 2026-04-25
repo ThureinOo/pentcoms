@@ -110,8 +110,7 @@ target_os:
   - Linux
 services: []
 techniques:
-  - SUID_Abuse
-  - Sudo_Abuse
+  - Perm_Abuse
 references:
   - https://gtfobins.github.io/
   - https://book.hacktricks.xyz/linux-hardening/privilege-escalation

@@ -39,7 +39,7 @@ target_os:
   - Linux
 services: []
 techniques:
-  - Python_Hijack
+  - Library_Hijack
 references:
   - https://book.hacktricks.xyz/linux-hardening/privilege-escalation#python-library-hijacking
   - https://rastating.github.io/privilege-escalation-via-python-library-hijacking/

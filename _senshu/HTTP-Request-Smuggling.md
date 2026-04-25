@@ -44,8 +44,7 @@ target_os:
   - Windows
 services:
   - HTTP
-techniques:
-  - Request_Smuggling
+techniques: []
 references:
   - https://portswigger.net/web-security/request-smuggling
 ---

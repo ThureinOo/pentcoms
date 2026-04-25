@@ -42,7 +42,7 @@ target_os:
   - Windows
 services: []
 techniques:
-  - AppLocker_Bypass
+  - Defense_Evasion
 references:
   - https://github.com/api0cradle/UltimateAppLockerByPassList
   - https://lolbas-project.github.io/

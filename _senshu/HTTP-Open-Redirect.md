@@ -31,8 +31,7 @@ target_os:
   - Windows
 services:
   - HTTP
-techniques:
-  - Open_Redirect
+techniques: []
 references:
   - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side_Testing/04-Testing_for_Client-side_URL_Redirect
 ---

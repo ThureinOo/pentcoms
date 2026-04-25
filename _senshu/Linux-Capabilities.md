@@ -72,7 +72,7 @@ target_os:
   - Linux
 services: []
 techniques:
-  - Capability_Abuse
+  - Perm_Abuse
 references:
   - https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-capabilities
   - https://gtfobins.github.io/

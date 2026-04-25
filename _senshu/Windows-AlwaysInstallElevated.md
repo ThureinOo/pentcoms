@@ -44,7 +44,7 @@ target_os:
   - Windows
 services: []
 techniques:
-  - AlwaysInstallElevated
+  - Service_Misconfig
 references:
   - https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation#alwaysinstallelevated
 ---

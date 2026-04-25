@@ -4,25 +4,15 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      # bloodhound-python — remote collection from Linux
+      # Remote collection from Linux
       bloodhound-python -u sec_user -p 'P@ssw0rd' -d senshu.sh -ns 10.10.10.27 --dns-tcp -c All --zip
-
-      # NetExec — BloodHound collection via LDAP
       nxc ldap 10.10.10.27 -u sec_user -p 'P@ssw0rd' --bloodhound --collection All
 
-      # NetExec — with explicit DNS server
-      nxc ldap 10.10.10.27 -u sec_user -p 'P@ssw0rd' --dns-server 10.10.10.27 --bloodhound --collection All
-
-      # SharpHound — run from Windows session (generates zip)
+      # SharpHound from Windows
       .\SharpHound.exe -c All --zip
 
-      # Start BloodHound GUI
+      # Import .zip into BloodHound GUI, run: Shortest Paths to DA, Kerberoastable, AS-REP Roastable
       sudo ./BloodHound --no-sandbox
-
-      # Import the .zip file into BloodHound and run queries:
-      # - Find Shortest Paths to Domain Admins
-      # - Find AS-REP Roastable Users
-      # - Find Kerberoastable Users
 phase:
   - Enumeration
 target_os:
