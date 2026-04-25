@@ -81,8 +81,15 @@
 
 </div>
 
-<!-- Search Bar -->
-<input id="bin-search" type="text" placeholder="Search among {{ site.senshu | size }} commands..."/>
+<!-- Search Bar + Sort -->
+<div id="search-sort-row">
+    <input id="bin-search" type="text" placeholder="Search among {{ site.senshu | size }} commands..."/>
+    <select id="sort-select" onchange="sortCards(this.value)">
+        <option value="default">Default</option>
+        <option value="name-asc">Name A→Z</option>
+        <option value="name-desc">Name Z→A</option>
+    </select>
+</div>
 
 <!-- Filter Count -->
 <p id="filter-count" style="text-align:center; margin: -10px 0 15px 0; font-size: 0.9em; color: #777;"></p>
@@ -92,7 +99,9 @@
 <table id="bin-table">
     {% assign senshu_sorted = site.senshu | reverse %}
     {% for file in senshu_sorted %}
+    {% capture bin_name_raw %}{% include get_bin_name path=file.path %}{% endcapture %}
     <tr class="bin-row"
+        data-name="{{ bin_name_raw | strip }}"
         data-phase="{% for p in file.phase %}{{ p }},{% endfor %}"
         data-target_os="{% for o in file.target_os %}{{ o }},{% endfor %}"
         data-services="{% for s in file.services %}{{ s }},{% endfor %}"
@@ -433,6 +442,19 @@ function restoreFromHash() {
         }
     });
     filter();
+}
+
+function sortCards(mode) {
+    var table = document.getElementById('bin-table');
+    var rows = Array.from(table.querySelectorAll('.bin-row'));
+    rows.sort(function(a, b) {
+        var nameA = (a.getAttribute('data-name') || '').toLowerCase();
+        var nameB = (b.getAttribute('data-name') || '').toLowerCase();
+        if (mode === 'name-asc') return nameA.localeCompare(nameB);
+        if (mode === 'name-desc') return nameB.localeCompare(nameA);
+        return 0; // default: keep original order
+    });
+    rows.forEach(function(row) { table.appendChild(row); });
 }
 
 document.addEventListener('DOMContentLoaded', function() {

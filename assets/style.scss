@@ -60,7 +60,13 @@ h1#page-title {
 #title-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+}
+
+.github-star-wrapper {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
 }
 
 #settings-btn {
@@ -69,7 +75,8 @@ h1#page-title {
     font-size: 1.4em;
     cursor: pointer;
     color: $muted;
-    padding: 4px 8px;
+    padding: 0;
+    line-height: 1;
     border-radius: 4px;
     transition: color 0.2s;
     &:hover { color: $accent; }
@@ -203,6 +210,26 @@ a {
     }
 }
 
+// Search + sort row
+#search-sort-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#sort-select {
+    padding: 10px 12px;
+    font-size: 0.9em;
+    border: 2px solid $border;
+    border-radius: 6px;
+    background: $bg;
+    color: $text;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    &:focus { border-color: $green; }
+}
+
 // Search bar
 #bin-search {
     width: 100%;
@@ -210,9 +237,10 @@ a {
     font-size: 1em;
     border: 2px solid $border;
     border-radius: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     outline: none;
     transition: border-color 0.2s;
+    flex: 1;
     &:focus { border-color: $green; }
 }
 

@@ -13,24 +13,12 @@
   label: SSTI
 - id: File_Upload
   label: File Upload
-- id: IDOR
-  label: IDOR
 - id: XXE
   label: XXE
-- id: Deserialization
-  label: Deserialization
 - id: NoSQL_Injection
   label: NoSQL Injection
-- id: JWT_Attack
-  label: JWT Attack
-- id: API_Testing
-  label: API Testing
-- id: CORS_Misconfiguration
-  label: CORS Misconfig
 - id: Open_Redirect
   label: Open Redirect
-- id: WebSocket_Attack
-  label: WebSocket Attack
 - id: Request_Smuggling
   label: Request Smuggling
 

