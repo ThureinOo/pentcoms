@@ -11,7 +11,7 @@ If you would like to contribute, check out the <a href="{{ site.baseurl }}/contr
 
 <p class="page-views">Views: <span id="gc-views">...</span></p>
 <script>
-  fetch('https://thureinoo.goatcounter.com/counter/%2Fsenshu.json')
+  fetch('https://senshu.goatcounter.com/counter/%2F.json')
     .then(r => r.json())
     .then(data => { document.getElementById('gc-views').innerText = data.count; })
     .catch(() => { document.getElementById('gc-views').innerText = '—'; });
