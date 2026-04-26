@@ -9,4 +9,12 @@ Senshu is an interactive cheat sheet, containing a curated list of offensive sec
 If you would like to contribute, check out the <a href="{{ site.baseurl }}/contribute/">contribute</a> page. You can also use the <a href="{{ site.baseurl }}/filters/">filters</a> and <a href="{{ site.baseurl }}/items/">items</a> pages to learn more about the available filter options.
 </p>
 
+<p class="page-views">Views: <span id="gc-views">...</span></p>
+<script>
+  fetch('https://thureinoo.goatcounter.com/counter/%2F.json')
+    .then(r => r.json())
+    .then(data => { document.getElementById('gc-views').innerText = data.count; })
+    .catch(() => { document.getElementById('gc-views').innerText = '—'; });
+</script>
+
 {% include bin_table.html %}

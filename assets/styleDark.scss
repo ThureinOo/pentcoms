@@ -96,6 +96,13 @@ a {
     font-size: 0.95em;
 }
 
+.page-views {
+    text-align: center;
+    color: $muted;
+    font-size: 0.85em;
+    margin-bottom: 15px;
+}
+
 #settings-panel {
     border: 1px solid $border;
     border-radius: 6px;
