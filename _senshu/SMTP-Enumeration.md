@@ -20,7 +20,7 @@ commands:
       EXPN admin
 
       # --- Test for open relay ---
-      MAIL FROM:<attacker@senshu.sh>
+      MAIL FROM:<attacker@senshu.local>
       RCPT TO:<victim@external.com>
       DATA
       Subject: Relay Test

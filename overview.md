@@ -155,7 +155,7 @@ Commands use these default placeholder values which can be replaced via the Sett
 |---|---|
 | Target IP | 10.10.10.27 |
 | Attacker IP | 10.10.10.21 |
-| Domain | senshu.sh |
+| Domain | senshu.local |
 | Username | sec_user |
 | Password | P@ssw0rd |
 

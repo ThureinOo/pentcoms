@@ -26,7 +26,7 @@ description: |
 
   Reference values:
     Target IP: 10.10.10.27
-    Domain: senshu.sh
+    Domain: senshu.local
     Username: sec_user
     Password: P@ssw0rd
 command: |
@@ -71,7 +71,7 @@ references:
 
 ### 5. Guidelines
 
-- Use **placeholder values** consistently: `sec_user`, `P@ssw0rd`, `senshu.sh`, `10.10.10.27` (attacker: `10.10.10.21`)
+- Use **placeholder values** consistently: `sec_user`, `P@ssw0rd`, `senshu.local`, `10.10.10.27` (attacker: `10.10.10.21`)
 - Commands should be **verified and working**
 - Include **multiple variants** where useful (e.g., with password vs. with hash)
 - Include at least one **reference link** (tool repository or documentation)

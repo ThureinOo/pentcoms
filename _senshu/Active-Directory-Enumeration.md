@@ -6,12 +6,12 @@ commands:
     cmd: |
       nxc smb 10.10.10.27
       nxc smb 10.10.10.27 -u '' -p '' --shares --users --rid-brute
-      kerbrute userenum -d senshu.sh --dc 10.10.10.27 /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt
+      kerbrute userenum -d senshu.local --dc 10.10.10.27 /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt
   - have: Credentials
     cmd: |
       nxc smb 10.10.10.27 -u sec_user -p 'P@ssw0rd' --users
       nxc smb 10.10.10.27 -u sec_user -p 'P@ssw0rd' --pass-pol
-      bloodhound-python -c All -u sec_user -p 'P@ssw0rd' -d senshu.sh -ns 10.10.10.27 --zip
+      bloodhound-python -c All -u sec_user -p 'P@ssw0rd' -d senshu.local -ns 10.10.10.27 --zip
 
       # PowerView
       Import-Module .\PowerView.ps1
@@ -23,7 +23,7 @@ commands:
       net user /domain
       net group "Domain Admins" /domain
       net localgroup Administrators
-      nltest /dclist:senshu.sh
+      nltest /dclist:senshu.local
 phase:
   - Enumeration
 target_os:

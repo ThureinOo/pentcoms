@@ -8,13 +8,13 @@ commands:
       nmap -p 389 --script ldap-rootdse,ldap-search 10.10.10.27
   - have: Credentials
     cmd: |
-      ldapsearch -x -H ldap://10.10.10.27 -D 'sec_user@senshu.sh' -w 'P@ssw0rd' -b 'DC=senshu,DC=sh' '(objectClass=user)'
+      ldapsearch -x -H ldap://10.10.10.27 -D 'sec_user@senshu.local' -w 'P@ssw0rd' -b 'DC=senshu,DC=sh' '(objectClass=user)'
       nxc ldap 10.10.10.27 -u 'sec_user' -p 'P@ssw0rd' --users
       nxc ldap 10.10.10.27 -u 'sec_user' -p 'P@ssw0rd' --groups
-      kerbrute userenum -d senshu.sh /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt --dc 10.10.10.27
-      impacket-GetADUsers -all -dc-ip 10.10.10.27 senshu.sh/sec_user:'P@ssw0rd'
+      kerbrute userenum -d senshu.local /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt --dc 10.10.10.27
+      impacket-GetADUsers -all -dc-ip 10.10.10.27 senshu.local/sec_user:'P@ssw0rd'
       # adPEAS (from Windows):
-      # . .\adPEAS.ps1; Invoke-adPEAS -Domain senshu.sh
+      # . .\adPEAS.ps1; Invoke-adPEAS -Domain senshu.local
 phase:
   - Enumeration
 target_os:

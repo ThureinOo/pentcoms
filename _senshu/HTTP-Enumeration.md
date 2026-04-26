@@ -7,7 +7,7 @@ commands:
       gobuster dir -u http://10.10.10.27 -w /usr/share/seclists/Discovery/Web-Content/big.txt
       gobuster dir -u http://10.10.10.27 -w /usr/share/seclists/Discovery/Web-Content/big.txt -x php,txt,zip,sql,asp,json
       ffuf -u http://10.10.10.27/FUZZ -w /usr/share/seclists/Discovery/Web-Content/big.txt
-      ffuf -u http://10.10.10.27 -H "Host: FUZZ.senshu.sh" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs <default_size>
+      ffuf -u http://10.10.10.27 -H "Host: FUZZ.senshu.local" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs <default_size>
       feroxbuster -u http://10.10.10.27 -w /usr/share/seclists/Discovery/Web-Content/big.txt
       # Nested directory search (after finding /admin/):
       gobuster dir -u http://10.10.10.27/admin/ -w /usr/share/seclists/Discovery/Web-Content/big.txt
