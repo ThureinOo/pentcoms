@@ -1,1 +1,1 @@
-{% assign parts = include.path | split: '/' %}{% assign filename = parts | last %}{{ filename | replace: '.md', '' }}
+{% if include.display_name and include.display_name != '' %}{{ include.display_name }}{% else %}{% assign parts = include.path | split: '/' %}{% assign filename = parts | last %}{{ filename | replace: '.md', '' }}{% endif %}

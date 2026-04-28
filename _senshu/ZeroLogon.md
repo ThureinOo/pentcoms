@@ -22,6 +22,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - RPC
 techniques:
   - CVE_Exploit

@@ -25,6 +25,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - SMB
 techniques:
   - NTLM_Relay

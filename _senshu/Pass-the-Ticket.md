@@ -18,6 +18,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - Kerberos
 techniques:
   - Pass-the-Ticket

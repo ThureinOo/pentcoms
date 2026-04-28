@@ -12,6 +12,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - SMB
 techniques:
   - Credential_Theft

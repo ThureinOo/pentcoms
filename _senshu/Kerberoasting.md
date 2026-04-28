@@ -52,6 +52,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - Kerberos
 techniques:
   - Kerberoasting

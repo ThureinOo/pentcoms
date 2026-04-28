@@ -12,6 +12,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - Kerberos
 techniques:
   - CVE_Exploit

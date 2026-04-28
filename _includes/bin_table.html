@@ -99,7 +99,7 @@
 <table id="bin-table">
     {% assign senshu_sorted = site.senshu | reverse %}
     {% for file in senshu_sorted %}
-    {% capture bin_name_raw %}{% include get_bin_name path=file.path %}{% endcapture %}
+    {% capture bin_name_raw %}{% include get_bin_name path=file.path display_name=file.display_name %}{% endcapture %}
     <tr class="bin-row"
         data-name="{{ bin_name_raw | strip }}"
         data-phase="{% for p in file.phase %}{{ p }},{% endfor %}"
@@ -109,7 +109,7 @@
         data-all-items="{% if file.commands %}{% for block in file.commands %}{{ block.have }},{% endfor %}{% else %}{% for i in file.items %}{{ i }},{% endfor %}{% endif %}"
     >
         <td>
-            {% capture bin_name %}{% include get_bin_name path=file.path %}{% endcapture %}
+            {% capture bin_name %}{% include get_bin_name path=file.path display_name=file.display_name %}{% endcapture %}
             <a href="{{ site.baseurl }}{{ file.url }}" class="bin-name">{{ bin_name }}</a>
             <a href="javascript:void(0)" onclick="copyCommand(this)" style="float: right;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
             {% include filter_list.html bin=file %}

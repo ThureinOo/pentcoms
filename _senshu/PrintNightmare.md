@@ -27,6 +27,7 @@ phase:
 target_os:
   - Windows
 services:
+  - Active_Directory
   - SMB
 techniques:
   - CVE_Exploit
