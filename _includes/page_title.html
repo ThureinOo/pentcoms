@@ -6,7 +6,10 @@
         <h1 id="page-title">{{ include.title }}</h1>
     </div>
     <div id="title-right">
-        <button id="settings-btn" onclick="toggleSettings()" title="Settings">&#9881;</button>
+        <div class="settings-hint-wrapper">
+            <button id="settings-btn" onclick="toggleSettings()" title="Settings">&#9881;</button>
+            <div class="settings-tooltip">Set your Target IP, Attacker IP &amp; more</div>
+        </div>
         <label class="switch" title="Toggle dark mode">
             <input type="checkbox">
             <span class="slider round"></span>

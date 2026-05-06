@@ -1,3 +1,11 @@
+<!-- Sticky bar (appears when filter container scrolls out of view) -->
+<div id="sticky-bar">
+    <div id="sticky-inner">
+        <div id="sticky-pills"></div>
+        <input id="sticky-search" type="text" placeholder="Search..."/>
+    </div>
+</div>
+
 <!-- Settings Panel (hidden by default) -->
 <div id="settings-panel" style="display:none;">
     <div class="settings-grid">
@@ -83,7 +91,10 @@
 
 <!-- Search Bar + Sort -->
 <div id="search-sort-row">
-    <input id="bin-search" type="text" placeholder="Search among {{ site.senshu | size }} commands..."/>
+    <div id="search-wrapper">
+        <input id="bin-search" type="text" placeholder="Search among {{ site.senshu | size }} commands..."/>
+        <span id="search-hint">Press any key to search</span>
+    </div>
     <select id="sort-select" onchange="sortCards(this.value)">
         <option value="default">Default</option>
         <option value="name-asc">Name A→Z</option>
@@ -114,6 +125,7 @@
             <a href="javascript:void(0)" onclick="copyCommand(this)" style="float: right;"><img src="{{ site.baseurl }}/assets/copy-button.svg" alt="Copy" title="Copy" class="copy-img"/></a>
             {% include filter_list.html bin=file %}
 
+            <div class="entry-body">
             {% if file.commands %}
                 {% for block in file.commands %}
                 <div class="command-section" data-have="{{ block.have }}">
@@ -132,6 +144,7 @@
                     </li>
                 </ul>
             {% endif %}
+            </div>
         </td>
     </tr>
     {% endfor %}
@@ -341,7 +354,9 @@ function filter() {
                     }
                 }
                 if (filtered.length > 0) {
-                    codeEl.textContent = filtered.join('\n');
+                    codeEl.innerHTML = highlightText(filtered.join('\n'), textSearch);
+                } else {
+                    codeEl.innerHTML = highlightText(codeEl.textContent, textSearch);
                 }
             });
             // Hide multi-sections with zero matches
@@ -364,6 +379,8 @@ function filter() {
         }
     });
 
+    document.getElementById('bin-table-wrapper').classList.toggle('search-active', !!textSearch);
+
     var noResults = document.getElementById('no-results');
     if (noResults) {
         noResults.style.display = (visibleCount === 0 && (textSearch || Object.keys(activeFilters).length > 0)) ? '' : 'none';
@@ -381,6 +398,7 @@ function filter() {
 
     // Dynamic technique buttons — show only techniques present in visible rows
     updateTechniqueButtons();
+    updateStickyBar();
 }
 
 function updateTechniqueButtons() {
@@ -457,12 +475,88 @@ function sortCards(mode) {
     rows.forEach(function(row) { table.appendChild(row); });
 }
 
+function initCollapsible() {
+    var THRESHOLD = 260;
+    document.querySelectorAll('.entry-body').forEach(function(body) {
+        if (body.scrollHeight > THRESHOLD) {
+            body.classList.add('collapsible');
+            var btn = document.createElement('button');
+            btn.className = 'expand-btn';
+            btn.textContent = 'Show more';
+            btn.onclick = function() {
+                var expanded = body.classList.toggle('expanded');
+                btn.textContent = expanded ? 'Show less' : 'Show more';
+            };
+            body.parentNode.insertBefore(btn, body.nextSibling);
+        }
+    });
+}
+
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function highlightText(text, search) {
+    var escaped = escapeHtml(text);
+    if (!search) return escaped;
+    var escapedSearch = escapeRegex(escapeHtml(search));
+    return escaped.replace(new RegExp('(' + escapedSearch + ')', 'gi'), '<mark>$1</mark>');
+}
+
+function updateStickyBar() {
+    var pillsContainer = document.getElementById('sticky-pills');
+    pillsContainer.innerHTML = '';
+    document.querySelectorAll('.filter-btn.active').forEach(function(btn) {
+        var pill = document.createElement('button');
+        pill.className = 'sticky-pill';
+        pill.innerHTML = escapeHtml(btn.textContent) + ' <span class="pill-x">×</span>';
+        pill.onclick = function() {
+            btn.classList.remove('active');
+            updateHash();
+            filter();
+        };
+        pillsContainer.appendChild(pill);
+    });
+    document.getElementById('sticky-search').value = document.getElementById('bin-search').value;
+}
+
+function initStickyBar() {
+    var filterContainer = document.getElementById('filter-container');
+    var stickyBar = document.getElementById('sticky-bar');
+    var observer = new IntersectionObserver(function(entries) {
+        stickyBar.style.display = entries[0].isIntersecting ? 'none' : 'block';
+    }, { threshold: 0 });
+    observer.observe(filterContainer);
+
+    document.getElementById('sticky-search').addEventListener('input', function() {
+        document.getElementById('bin-search').value = this.value;
+        filter();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     storeOriginals();
     loadSettings();
     replaceAllPlaceholders();
+    initCollapsible();
+    initStickyBar();
 
-    document.getElementById('bin-search').addEventListener('input', filter);
+    // Pulse settings icon on first visit
+    if (!localStorage.getItem('senshu_settings_seen')) {
+        var settingsBtn = document.getElementById('settings-btn');
+        if (settingsBtn) {
+            settingsBtn.classList.add('pulse-hint');
+            settingsBtn.addEventListener('click', function() {
+                settingsBtn.classList.remove('pulse-hint');
+                localStorage.setItem('senshu_settings_seen', '1');
+            }, { once: true });
+        }
+    }
+
+    document.getElementById('bin-search').addEventListener('input', function() {
+        document.getElementById('sticky-search').value = this.value;
+        filter();
+    });
 
     document.querySelectorAll('#settings-panel input').forEach(function(input) {
         input.addEventListener('input', function() { saveSettings(); });
@@ -473,17 +567,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.tagName === 'INPUT') {
             if (e.key === 'Escape') {
                 search.value = '';
+                document.getElementById('sticky-search').value = '';
                 document.querySelectorAll('.filter-btn.active').forEach(function(btn) {
                     btn.classList.remove('active');
                 });
                 window.location.hash = '';
                 filter();
                 search.blur();
+                document.getElementById('sticky-search').blur();
             }
             return;
         }
         if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-            search.focus();
+            var stickyBar = document.getElementById('sticky-bar');
+            if (stickyBar && stickyBar.style.display === 'block') {
+                document.getElementById('sticky-search').focus();
+            } else {
+                search.focus();
+            }
         }
     });
 
