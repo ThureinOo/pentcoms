@@ -28,6 +28,7 @@ description: |
     Target IP: 10.10.10.27
     Domain: senshu.local
     Username: sec_user
+    Attacker IP: 10.10.10.21
     Password: P@ssw0rd
 command: |
   your-command-here
@@ -42,32 +43,41 @@ items:
   - Password
 techniques:
   - Kerberoasting
-network_position:
-  - Internal
 references:
   - https://github.com/example/tool
 ---
 ```
 
+For entries that need different commands depending on what the user already has, use `commands` instead of `command`:
+
+```yaml
+commands:
+  - have: No_Creds
+    cmd: |
+      unauthenticated-command 10.10.10.27
+  - have: Credentials
+    cmd: |
+      authenticated-command -u sec_user -p 'P@ssw0rd' 10.10.10.27
+```
+
 ### 4. Valid values for each field
 
 **Phase:**
-`Recon`, `Scanning`, `Enumeration`, `Exploitation`, `Post-Exploitation`, `PrivEsc`, `Lateral_Movement`, `Persistence`, `Exfiltration`
+`Reconnaissance`, `Enumeration`, `Exploitation`, `Post-Exploitation`, `PrivEsc`, `Persistence`
 
 **Target OS:**
 `Linux`, `Windows`, `macOS`
 
 **Services:**
-`SMB`, `HTTP`, `SSH`, `FTP`, `DNS`, `LDAP`, `Kerberos`, `RDP`, `WinRM`, `MSSQL`, `MySQL`, `SNMP`, `SMTP`, `RPC`, `NFS`, `WMI`, `DCOM`, `NTLM`, `VNC`, `Redis`, `PostgreSQL`
+`Active_Directory`, `ADCS`, `SMB`, `HTTP`, `SSH`, `FTP`, `DNS`, `LDAP`, `Kerberos`, `RDP`, `WinRM`, `MSSQL`, `MySQL`, `SNMP`, `SMTP`, `RPC`, `NFS`, `VNC`, `Redis`, `PostgreSQL`
 
 **Items (What you have):**
-`No_Creds`, `Username`, `Password`, `Hash`, `TGT`, `TGS`, `Certificate`, `Shell`, `Key`, `Token`, `SPN`
+`No_Creds`, `Username`, `Password`, `Credentials`, `Hash`, `TGT`, `TGS`, `Certificate`, `Shell`, `Key`, `Token`, `SPN`
 
 **Techniques:**
-`Kerberoasting`, `AS-REP_Roasting`, `Pass-the-Hash_Ticket`, `Ticket_Forgery`, `DCSync`, `NTLM_Relay_Poisoning`, `BloodHound`, `Password_Spraying`, `Delegation_Abuse`, `ACL_Abuse`, `ADCS_Abuse`, `Shadow_Credentials`, `Web_Injection`, `Web_File_Attack`, `Deserialization`, `Reverse_Shell`, `Pivoting_Tunneling`, `Token_Impersonation`, `Linux_Misconfig`, `Kernel_Exploit`
+`XSS`, `Injection`, `Command_Injection`, `SSRF`, `LFI_RFI`, `SSTI`, `File_Upload`, `XXE`, `Token_Impersonation`, `Service_Misconfig`, `DLL_Hijack`, `UAC_Bypass`, `Kernel_Exploit`, `Defense_Evasion`, `Perm_Abuse`, `Cron_Abuse`, `Library_Hijack`, `Docker_Escape`, `NFS_Abuse`, `Writable_Service`, `TCC_Bypass`, `Dylib_Hijack`, `LaunchDaemon_Abuse`, `Kerberoasting`, `AS-REP_Roasting`, `Pass-the-Hash`, `NTLM_Relay`, `DCSync`, `Pass-the-Ticket`, `BloodHound`, `Password_Spraying`, `ACL_Abuse`, `ADCS_Abuse`, `Delegation_Abuse`, `Ticket_Forgery`, `Credential_Theft`, `CVE_Exploit`
 
-**Network Position:**
-`External`, `Internal`, `Local`
+The source of truth for these values is `_data/`. Run `ruby scripts/validate_entries.rb` before opening a pull request.
 
 ### 5. Guidelines
 

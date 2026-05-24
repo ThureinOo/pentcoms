@@ -1,6 +1,6 @@
 # Senshu
 
-A fast, filterable pentest cheat sheet built with Jekyll. 111 entries covering recon, exploitation, post-exploitation, and privilege escalation across Windows, Linux, macOS, and Active Directory.
+A fast, filterable pentest cheat sheet built with Jekyll. 114 entries covering recon, exploitation, post-exploitation, and privilege escalation across Windows, Linux, macOS, and Active Directory.
 
 **Live site:** https://thureinoo.github.io/senshu
 
@@ -90,7 +90,7 @@ Valid values for each field are defined in `_data/`:
 ## Structure
 
 ```
-_senshu/          # entry markdown files (111 entries)
+_senshu/          # entry markdown files (114 entries)
 _data/            # filter value definitions
 _includes/        # bin_table.html (main UI), page_title.html
 _layouts/         # bin.html (per-entry layout), default.html
